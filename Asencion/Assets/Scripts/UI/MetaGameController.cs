@@ -1,7 +1,6 @@
 using Platformer.Mechanics;
 using Platformer.UI;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Platformer.UI
 {
@@ -27,12 +26,10 @@ namespace Platformer.UI
         public GameController gameController;
 
         bool showMainCanvas = false;
-        private InputAction m_MenuAction;
 
         void OnEnable()
         {
             _ToggleMainMenu(showMainCanvas);
-            m_MenuAction = InputSystem.actions.FindAction("Player/Menu");
         }
 
         /// <summary>
@@ -66,7 +63,7 @@ namespace Platformer.UI
 
         void Update()
         {
-            if (m_MenuAction.WasPressedThisFrame())
+            if (Input.GetButtonDown("Menu"))
             {
                 ToggleMainMenu(show: !showMainCanvas);
             }
