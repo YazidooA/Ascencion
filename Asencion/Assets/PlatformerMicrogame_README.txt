@@ -6,11 +6,6 @@ Learn more about the project here: https://assetstore.unity.com/packages/templat
 
 Changelog
 ---------
-## [5.0.3] - 2025-01-20
-
-### Changed
-- Project now use the Input System and a project wind Input Action instead of the deprecated Input Manager
-
 ## [5.0.2] - 2024-11-11
 
 ### Fixed

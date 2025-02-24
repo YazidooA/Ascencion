@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0f78e1f6d1acdd0f79ed473878977ca4
+guid: b57d6b64cda15514f96014d0c78d0dfd
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      grand-theft-auto-v-playstation-3-ps3-1357326682-071-card_0: 6335805349926346016
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
