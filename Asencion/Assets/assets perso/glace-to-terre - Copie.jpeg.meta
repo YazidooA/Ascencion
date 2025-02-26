@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 0f78e1f6d1acdd0f79ed473878977ca4
+guid: 7e4687a3e17a826468d057e8aa96c5e4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6335805349926346016
-    second: grand-theft-auto-v-playstation-3-ps3-1357326682-071-card_0
+      213: -6304632798573047245
+    second: glace-to-terre - Copie_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: grand-theft-auto-v-playstation-3-ps3-1357326682-071-card_0
+      name: glace-to-terre - Copie_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1200
-        height: 675
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 02d1160b56d4de750800000000000000
-      internalID: 6335805349926346016
+      spriteID: 332d6c18fd17188a0800000000000000
+      internalID: -6304632798573047245
       vertices: []
       indices: 
       edges: []
