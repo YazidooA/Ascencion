@@ -1,6 +1,6 @@
-﻿﻿using UnityEngine;
-
-public class PlayerController : MonoBehaviour
+﻿using UnityEngine;
+using Photon.Pun;
+public class PlayerController : MonoBehaviourPun
 {
     [SerializeField] private float speed = 5f;
     [SerializeField] private float jumpForce = 3f;
@@ -11,7 +11,6 @@ public class PlayerController : MonoBehaviour
     private float jumpTimer = 0;
     private float dashTimer = 0f;
     private bool isDashing = false;
-
     void Start()
     {
         transform.position = new Vector3(transform.position.x, groundHeight, transform.position.z);
@@ -37,7 +36,7 @@ public class PlayerController : MonoBehaviour
     void Deplacement()
     {
         Vector3 move = Vector3.zero;
-        if (Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
             move -= transform.right;
             if (Input.GetKey(KeyCode.F))

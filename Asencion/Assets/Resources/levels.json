@@ -1,0 +1,192 @@
+{
+  "levels": [
+    {
+      "id": 0,
+      "name": "Camp 0",
+      "description": "Là où les joueurs se rejoignent / lobby",
+      "events": []
+    },
+    {
+      "id": 1,
+      "name": "Niveau 1",
+      "description": "Quelques obstacles (niveau tuto) chill + premier ennemis (1-2 loups). Se défendre avec un couteau.",
+      "events": [
+        {
+          "event_type": "enemy_spawn",
+          "enemy": "loup",
+          "quantity": 2
+        },
+        {
+          "event_type": "weapon_acquisition",
+          "weapon": "couteau"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Camp 1",
+      "description": "Afficher le message ‘Vous arrivez sur un glacier faites attention’. Chaussures crantées pour ne pas glisser.",
+      "events": [
+        {
+          "event_type": "message",
+          "message": "Vous arrivez sur un glacier faites attention"
+        },
+        {
+          "event_type": "item_acquisition",
+          "item": "chaussures crantées"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Niveau 2",
+      "description": "Sol glissant avec un risque de glisser tout en bas mais possibilité de se rattraper.",
+      "events": [
+        {
+          "event_type": "environment_change",
+          "condition": "glissant",
+          "effect": "glisser"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Camp 2",
+      "description": "Afficher le message ‘Attention vous arrivez sur une zone à crevasse’. Échelle (à mettre sur les crevasses pour les traverser).",
+      "events": [
+        {
+          "event_type": "message",
+          "message": "Attention vous arrivez sur une zone à crevasse"
+        },
+        {
+          "event_type": "item_acquisition",
+          "item": "échelle"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Niveau 3",
+      "description": "Placer l’échelle au-dessus des crevasses puis marcher dessus pour aller de l’autre côté.",
+      "events": [
+        {
+          "event_type": "puzzle",
+          "type": "échelle",
+          "action": "placer"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Camp 3",
+      "description": "Afficher le message ‘Vous allez devoir maintenant grimper le mur de glace qui signera la fin du glacier’. Piolet cascade de glace.",
+      "events": [
+        {
+          "event_type": "message",
+          "message": "Vous allez devoir maintenant grimper le mur de glace qui signera la fin du glacier"
+        },
+        {
+          "event_type": "item_acquisition",
+          "item": "piolet"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Niveau 4",
+      "description": "Grand mur de glace avec des plateformes. Le joueur doit sauter et, si les plateformes sont trop éloignées, utiliser un piolet comme balancier.",
+      "events": [
+        {
+          "event_type": "environment_change",
+          "condition": "mur_de_glace",
+          "effect": "sauter"
+        },
+        {
+          "event_type": "special_action",
+          "action": "piolet_balancier"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Camp 4",
+      "description": "Afficher le message ‘Bravo vous faites preuve de beaucoup de courage mais il va vous en falloir plus pour arriver au sommet’. Grappin qui se plante.",
+      "events": [
+        {
+          "event_type": "message",
+          "message": "Bravo vous faites preuve de beaucoup de courage mais il va vous en falloir plus pour arriver au sommet"
+        },
+        {
+          "event_type": "item_acquisition",
+          "item": "grappin"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Niveau 5.1",
+      "description": "Le joueur fait quelques obstacles, utilise son grappin, mais déclenche une avalanche qui bloque le chemin, il faut prendre un autre chemin.",
+      "events": [
+        {
+          "event_type": "special_action",
+          "action": "grappin"
+        },
+        {
+          "event_type": "event_trigger",
+          "trigger": "avalanche",
+          "effect": "bloquer_chemin"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Retour au Camp 4",
+      "description": "Retour au Camp 4 après avoir échappé à l'avalanche.",
+      "events": []
+    },
+    {
+      "id": 11,
+      "name": "Niveau 5.2",
+      "description": "Chutes de séracs.",
+      "events": [
+        {
+          "event_type": "environment_change",
+          "condition": "chutes_de_seracs",
+          "effect": "obstacles"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "name": "Camp 5",
+      "description": "Afficher le message ‘...’. Bouteille d’oxygène.",
+      "events": [
+        {
+          "event_type": "message",
+          "message": "..."
+        },
+        {
+          "event_type": "item_acquisition",
+          "item": "bouteille_oxygene"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "name": "Niveau 6",
+      "description": "Chronométré (oxygène limité), sommet.",
+      "events": [
+        {
+          "event_type": "time_limit",
+          "condition": "oxygene_limite",
+          "effect": "chronometre"
+        },
+        {
+          "event_type": "objective",
+          "objective": "atteindre_sommet"
+        }
+      ]
+    }
+  ]
+}
+
