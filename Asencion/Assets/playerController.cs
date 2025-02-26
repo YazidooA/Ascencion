@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerScript : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed = 5f;
     [SerializeField] private float jumpForce = 3f;
@@ -11,7 +11,7 @@ public class PlayerScript : MonoBehaviour
     private float jumpTimer = 0;
     private float dashTimer = 0f;
     private bool isDashing = false;
-    
+
     void Start()
     {
         transform.position = new Vector3(transform.position.x, groundHeight, transform.position.z);
