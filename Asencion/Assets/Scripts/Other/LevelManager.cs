@@ -1,7 +1,7 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System.IO;
+using UnityEngine.SceneManagement; // Nécessaire pour charger les scènes
 
 [System.Serializable]
 public class EventData
@@ -24,6 +24,7 @@ public class LevelData
     public string name;
     public string description;
     public List<EventData> events;
+    public string sceneName; // Nom de la scène à charger
 }
 
 [System.Serializable]
@@ -39,15 +40,15 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         LoadLevels();
-        DisplayLevel(1); // Exemple de chargement du niveau 1
+        CreateSceneForLevel(1); // Charger le niveau 1 par défaut
     }
 
     void LoadLevels()
     {
-        string filePath = "Assets/Resources/levels.json"; // Assurez-vous que le fichier JSON se trouve dans le dossier Resources
-        if (File.Exists(filePath))
+        string filePath = "Assets/Resources/levels.json"; // Assurez-vous que le fichier JSON est dans Resources
+        if (System.IO.File.Exists(filePath))
         {
-            string jsonContent = File.ReadAllText(filePath);
+            string jsonContent = System.IO.File.ReadAllText(filePath);
             levelList = JsonUtility.FromJson<LevelList>(jsonContent);
             Debug.Log("Niveaux chargés avec succès.");
         }
@@ -57,14 +58,17 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public void DisplayLevel(int levelId)
+    public void CreateSceneForLevel(int levelId)
     {
         LevelData level = levelList.levels.Find(l => l.id == levelId);
 
         if (level != null)
         {
-            Debug.Log($"Niveau: {level.name}");
+            Debug.Log($"Chargement de la scène pour le niveau: {level.name}");
             Debug.Log($"Description: {level.description}");
+
+            // Charger la scène correspondante à ce niveau
+            LoadScene(level.sceneName);
 
             // Traiter les événements associés au niveau
             foreach (var levelEvent in level.events)
@@ -78,6 +82,18 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    void LoadScene(string sceneName)
+    {
+        try
+        {
+            SceneManager.LoadScene(sceneName);
+        }
+        catch(Exception)
+        {
+            Debug.LogError($"La scène {sceneName} n'a pas été trouvée.");
+        }
+    }
+
     void ProcessEvent(EventData levelEvent)
     {
         switch (levelEvent.event_type)
@@ -85,36 +101,15 @@ public class LevelManager : MonoBehaviour
             case "message":
                 Debug.Log($"Message: {levelEvent.message}");
                 break;
-
             case "item_acquisition":
                 Debug.Log($"L'objet {levelEvent.item} a été acquis !");
-                // Vous pouvez ajouter du code pour faire apparaître l'objet dans le jeu
                 break;
-
             case "enemy_spawn":
                 Debug.Log($"Des ennemis {levelEvent.enemy} apparaissent ! Quantité: {levelEvent.quantity}");
-                // Vous pouvez ajouter du code pour faire apparaître des ennemis dans le jeu
                 break;
-
-            case "special_action":
-                Debug.Log($"Action spéciale: {levelEvent.action}");
-                // Vous pouvez ajouter du code pour effectuer l'action spéciale
-                break;
-
-            case "environment_change":
-                Debug.Log($"Changement d'environnement: {levelEvent.condition} - Effet: {levelEvent.effect}");
-                // Vous pouvez ajouter du code pour gérer les changements d'environnement (comme le sol glissant)
-                break;
-
-            case "event_trigger":
-                Debug.Log($"Déclenchement d'événement: {levelEvent.trigger} - Effet: {levelEvent.effect}");
-                // Vous pouvez ajouter du code pour déclencher des événements spécifiques dans le jeu
-                break;
-
             default:
                 Debug.LogWarning($"Événement inconnu: {levelEvent.event_type}");
                 break;
         }
     }
 }
-

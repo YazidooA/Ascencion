@@ -1,0 +1,65 @@
+{
+  "levels": [
+    {
+      "id": 1,
+      "name": "Niveau 1",
+      "description": "Premier niveau avec des obstacles et des ennemis.",
+      "sceneName": "Level1",  
+      "blocks": [
+        {
+          "name": "feuille-arbre - Copie.jpeg",
+          "type": "texture",
+          "position": {"x": 0, "y": 0, "z": 0},
+          "scale": {"x": 1, "y": 1, "z": 1}
+        },
+        {
+          "name": "neige.png",
+          "type": "texture",
+          "position": {"x": 2, "y": 0, "z": 0},
+          "scale": {"x": 1, "y": 1, "z": 1}
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Niveau 2",
+      "description": "Deuxième niveau avec plus de défis.",
+      "sceneName": "Level2",
+      "blocks": [
+        {
+          "name": "feuille-arbre.jpeg",
+          "type": "texture",
+          "position": {"x": 0, "y": 1, "z": 0},
+          "scale": {"x": 1, "y": 1, "z": 1}
+        },
+        {
+          "name": "neige-to-terre - Copie.jpeg",
+          "type": "texture",
+          "position": {"x": 3, "y": 1, "z": 0},
+          "scale": {"x": 1, "y": 1, "z": 1}
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Niveau 3",
+      "description": "Troisième niveau avec des plateformes à traverser.",
+      "sceneName": "Level3",
+      "blocks": [
+        {
+          "name": "glace - Copie.jpeg",
+          "type": "texture",
+          "position": {"x": 0, "y": 2, "z": 0},
+          "scale": {"x": 1, "y": 1, "z": 1}
+        },
+        {
+          "name": "tronc-arbre - Copie.jpeg",
+          "type": "texture",
+          "position": {"x": 4, "y": 2, "z": 0},
+          "scale": {"x": 1, "y": 1, "z": 1}
+        }
+      ]
+    }
+  ]
+}
+
