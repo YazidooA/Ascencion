@@ -1,32 +1,91 @@
 {
   "levels": [
     {
+      "id": 0,
+      "name": "Camp 0",
+      "message": "Point de rassemblement des joueurs",
+      "blocks": []
+    },
+    {
       "id": 1,
       "sceneName": "Level1",
+      "description": "Quelques obstacles (niveau tuto) chill + premier ennemis (1-2 loups). Se défendre avec un couteau.",
       "blocks": [
         {
           "name": "neige.png",
-          "position": { "x": 0, "y": 0, "z": 0 },
+          "position": { "x": -1, "y": 0, "z": 0 },
+          "scale": { "x": 1, "y": 1, "z": 1 },
+          "repeat": true
+        },
+        {
+          "name": "neige-to-terre.png",
+          "position": { "x": -1, "y": -1, "z": 0 },
+          "scale": { "x": 1, "y": 1, "z": 1 },
+          "repeat": true
+        },
+        {
+          "name": "pierre.png",
+          "position": { "x": 3, "y": 4, "z": 0 },
           "scale": { "x": 1, "y": 1, "z": 1 }
         },
         {
-          "name": "glace.jpeg",
-          "position": { "x": 2, "y": 0, "z": 0 },
+          "name": "pierre.png",
+          "position": { "x": 4, "y": 4, "z": 0 },
+          "scale": { "x": 1, "y": 1, "z": 1 }
+        },
+        {
+          "name": "pierre.png",
+          "position": { "x": 5, "y": 4, "z": 0 },
+          "scale": { "x": 1, "y": 1, "z": 1 }
+        },
+        {
+          "name": "ennemi_loup.png",
+          "position": { "x": 9, "y": 1, "z": 0 },
           "scale": { "x": 1, "y": 1, "z": 1 }
         }
       ]
     },
     {
       "id": 2,
-      "sceneName": "Level2",
+      "name": "Camp 1",
+      "message": "Vous arrivez sur un glacier, faites attention.",
+      "items": [
+        {
+          "name": "chaussures_crantees",
+          "effect": "antiglisse"
+        }
+      ],
+      "blocks": []
+    },
+    {
+      "id": 3,
+      "name": "Niveau 2",
+      "description": "Sol glissant avec un risque de glisser tout en bas mais possibilité de se rattraper.",
       "blocks": [
         {
-          "name": "pierre.png",
-          "position": { "x": 1, "y": 1, "z": 0 },
-          "scale": { "x": 2, "y": 2, "z": 2 }
+          "name": "glace.png",
+          "position": { "x": 0, "y": 0, "z": 0 },
+          "scale": { "x": 1, "y": 1, "z": 1 },
+          "slippery": true
+        },
+        {
+          "name": "plateforme_securite.png",
+          "position": { "x": 4, "y": -2, "z": 0 },
+          "scale": { "x": 1.5, "y": 1, "z": 1 }
         }
       ]
+    },
+    {
+      "id": 4,
+      "name": "Camp 2",
+      "message": "Attention, vous arrivez sur une zone à crevasse.",
+      "items": [
+        {
+          "name": "echelle",
+          "effect": "traverser_crevasses"
+        }
+      ],
+      "blocks": []
     }
   ]
 }
-

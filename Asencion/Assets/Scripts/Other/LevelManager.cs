@@ -32,16 +32,21 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private int GetLevelIdFromSceneName(string sceneName)
+private int GetLevelIdFromSceneName(string sceneName)
+{
+    Debug.Log($"🛠 Extraction de l'ID à partir du nom de la scène : {sceneName}");
+    if (sceneName.StartsWith("Level"))
     {
-        if (sceneName.StartsWith("Level"))
+        string numberPart = sceneName.Substring(5); // Enlève "Level"
+        if (int.TryParse(numberPart, out int levelId))
         {
-            string numberPart = sceneName.Substring(5); // Enlève "Level"
-            if (int.TryParse(numberPart, out int levelId))
-            {
-                return levelId;
-            }
+            Debug.Log($"✅ ID extrait : {levelId}");
+            return levelId;
         }
-        return -1; // Erreur si l'ID du niveau ne peut pas être extrait
     }
+    Debug.LogWarning("⚠️ Erreur lors de l'extraction de l'ID.");
+    return -1; // Retourne -1 en cas d'erreur
+}
+
+
 }

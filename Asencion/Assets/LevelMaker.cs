@@ -1,29 +1,87 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-    [System.Serializable]
-    public class Block
+[System.Serializable]
+public class Block
+{
+    [SerializeField]
+    private string name;
+    [SerializeField]
+    private Vector3 position;
+    [SerializeField]
+    private Vector3 scale;
+    [SerializeField]
+    private bool repeat;
+
+    public string Name
     {
-        public string name;
-        public Vector3 position;
-        public Vector3 scale;
+        get => name;
+        set => name = value;
     }
 
-    [System.Serializable]
-    public class LevelData
+    public Vector3 Position
     {
-        public int id;
-        public string sceneName;
-        public Block[] blocks;
+        get => position;
+        set => position = value;
     }
 
-    [System.Serializable]
-    public class LevelList
+    public Vector3 Scale
     {
-        public LevelData[] levels;
+        get => scale;
+        set => scale = value;
     }
+
+    public bool Repeat
+    {
+        get => repeat;
+        set => repeat = value;
+    }
+}
+
+[System.Serializable]
+public class LevelData
+{
+    [SerializeField]
+    private int id;
+    [SerializeField]
+    private string sceneName;
+    [SerializeField]
+    private Block[] blocks;
+
+    public int Id
+    {
+        get => id;
+        set => id = value;
+    }
+
+    public string SceneName
+    {
+        get => sceneName;
+        set => sceneName = value;
+    }
+
+    public Block[] Blocks
+    {
+        get => blocks;
+        set => blocks = value;
+    }
+}
+
+[System.Serializable]
+public class LevelList
+{
+    [SerializeField]
+    private LevelData[] levels;
+
+    public LevelData[] Levels
+    {
+        get => levels;
+        set => levels = value;
+    }
+}
 
 public class LevelMaker : MonoBehaviour
 {
@@ -42,7 +100,18 @@ public class LevelMaker : MonoBehaviour
         {
             string jsonContent = File.ReadAllText(filePath);
             levelList = JsonUtility.FromJson<LevelList>(jsonContent);
-            Debug.Log($"✅ {levelList.levels.Length} niveaux chargés !");
+
+            if (levelList == null)
+            {
+                Debug.LogError("❌ Le chargement du JSON a échoué.");
+                return;
+            }
+
+            Debug.Log($"✅ {levelList.Levels.Length} niveaux chargés !");
+            foreach (var level in levelList.Levels)
+            {
+                Debug.Log($"Niveau ID : {level.Id}, Nom de la scène : {level.SceneName}");
+            }
         }
         else
         {
@@ -55,34 +124,51 @@ public class LevelMaker : MonoBehaviour
         LevelData level = FindLevelById(levelId);
         if (level == null)
         {
-            Debug.LogError("Niveau non trouvé !");
+            Debug.LogError("❌ Niveau non trouvé !");
             return;
         }
 
-        Debug.Log($"🔄 Chargement de la scène : {level.sceneName}...");
-        
-        // Ajout d'un écouteur pour attendre la fin du chargement de la scène
+        Debug.Log($"🔄 Chargement de la scène : {level.SceneName}...");
         SceneManager.sceneLoaded += OnSceneLoaded;
-
-        // Charger la scène
-        SceneManager.LoadScene(level.sceneName);
+        SceneManager.LoadScene(level.SceneName);
     }
+void LoadCharacter(Vector3 spawnPosition)
+{
+    // Chemin relatif au dossier Resources (sans l'extension .prefab)
+    string characterPath = "Player";
+    
+    // Charger le personnage à partir du dossier Resources
+    GameObject character = Resources.Load<GameObject>(characterPath);
+    
+    // Vérifiez si le personnage a été correctement chargé
+    if (character != null)
+    {
+        // Instancier le personnage dans la scène à la position de spawn spécifiée
+        Instantiate(character, spawnPosition, Quaternion.identity);
+        Debug.Log($"✅ Personnage {characterPath} importé et instancié avec succès à la position {spawnPosition} !");
+    }
+    else
+    {
+        Debug.LogError($"❌ Impossible de charger le personnage : {characterPath}");
+    }
+}
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Debug.Log($"✅ Scène {scene.name} chargée !");
-
-        // Récupérer l'ID du niveau
         int levelId = GetLevelIdFromSceneName(scene.name);
         LevelData level = FindLevelById(levelId);
 
         if (level != null)
         {
             Debug.Log($"🛠 Création des objets pour {scene.name}...");
-            CreateBlocks(level.blocks);
+            CreateBlocks(Repeat0(level.Blocks));
+
+            // Spécifiez la position de spawn souhaitée pour le personnage
+            Vector3 characterSpawnPosition = new Vector3(0, 1, 0); // Remplacez cette position par celle que vous souhaitez
+            LoadCharacter(characterSpawnPosition);
         }
 
-        // Se désabonner pour éviter d'appeler plusieurs fois cette fonction
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
@@ -101,34 +187,99 @@ public class LevelMaker : MonoBehaviour
 
     LevelData FindLevelById(int levelId)
     {
-        foreach (var level in levelList.levels)
+        Debug.Log($"🔍 Recherche du niveau avec ID : {levelId}");
+        foreach (var level in levelList.Levels)
         {
-            if (level.id == levelId)
+            Debug.Log($"Vérification du niveau avec ID : {level.Id}");
+            if (level.Id == levelId)
+            {
+                Debug.Log($"✅ Niveau trouvé : {level.SceneName}");
                 return level;
+            }
         }
+        Debug.LogWarning($"⚠️ Aucun niveau trouvé avec l'ID : {levelId}");
         return null;
     }
 
-    void CreateBlocks(Block[] blocks)
+    private Block[] Repeat0(Block[] blocks)
     {
-        foreach (var block in blocks)
+        List<Block> res = new List<Block>();
+
+        foreach (var elt in blocks)
         {
-            GameObject blockObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            blockObject.transform.position = block.position;
-            blockObject.transform.localScale = block.scale;
-
-            string textureName = "Textures/" + block.name.Replace(".jpeg", "").Replace(".png", "");
-            Texture2D texture = Resources.Load<Texture2D>(textureName);
-
-            if (texture != null)
+            if (elt.Repeat)
             {
-                Renderer renderer = blockObject.GetComponent<Renderer>();
-                renderer.material.mainTexture = texture;
+                float positionX = elt.Position.x;
+                for (float i = 1f; i <= 20f; i++)
+                {
+                    Block no = new Block();
+                    no.Name=elt.Name;
+                    no.Position=new Vector3(positionX + i, elt.Position.y, elt.Position.z);
+                    no.Scale=elt.Scale;
+                    res.Add(no); 
+                }
             }
-            else
+            res.Add(elt); 
+        }
+        Debug.Log($"✅ {res.Count} blocs générés !");
+        return res.ToArray();
+    }
+
+void CreateBlocks(Block[] blocks)
+{
+    Dictionary<GameObject, Texture2D> blockTextures = new Dictionary<GameObject, Texture2D>();
+
+    foreach (var block in blocks)
+    {
+        GameObject blockObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        blockObject.transform.position = block.Position;
+        blockObject.transform.localScale = block.Scale;
+
+        // Ajoute un Collider si absent
+        if (blockObject.GetComponent<BoxCollider>() == null)
+        {
+            blockObject.AddComponent<BoxCollider>();
+        }
+
+        // Ajoute un Rigidbody kinematic pour les blocs
+        Rigidbody rb = blockObject.AddComponent<Rigidbody>();
+        rb.isKinematic = true;
+
+        // Charge la texture
+        string textureName = block.Name.Replace(".jpeg", "").Replace(".jpg", "").Replace(".png", "");
+        Texture2D texture = Resources.Load<Texture2D>("Textures/" + textureName);
+
+        if (texture != null)
+        {
+            Renderer renderer = blockObject.GetComponent<Renderer>();
+            if (renderer != null)
             {
-                Debug.LogWarning($"⚠️ Texture {block.name} dans {textureName} introuvable !");
+                // Appliquer un shader URP pour éviter le rose
+                Material material = new Material(Shader.Find("Universal Render Pipeline/Lit"));
+
+                if (material != null)
+                {
+                    material.mainTexture = texture;
+                    material.SetFloat("_Smoothness", 1f);
+                    material.SetFloat("_Metallic", 1f);
+                    renderer.material = material;
+
+                    // Stocke l'objet et sa texture
+                    blockTextures[blockObject] = texture;
+
+                    Debug.Log($"✅ Texture {texture.name} appliquée sur {blockObject.name}");
+
+                    // Tourner la texture de 180 degrés sur l'axe Y
+                    blockObject.transform.Rotate(0, 180, 0);
+                }
             }
         }
+        else
+        {
+            Debug.LogWarning($"⚠️ Texture introuvable : {textureName}");
+        }
     }
+
+    Debug.Log($"🎨 {blockTextures.Count} blocs créés avec des textures.");
+}
 }
