@@ -25,59 +25,110 @@ using UnityEngine.SceneManagement;
         public LevelData[] levels;
     }
 
-    public class LevelMaker : MonoBehaviour
+public class LevelMaker : MonoBehaviour
+{
+    private LevelList levelList;
+    public string jsonFileName = "levels.json";
+
+    void Start()
     {
-        private LevelList levelList;
-        void Start()
+        LoadLevels();
+    }
+
+    void LoadLevels()
+    {
+        string filePath = Path.Combine(Application.streamingAssetsPath, jsonFileName);
+        if (File.Exists(filePath))
         {
-            LoadLevels();
-            StartCoroutine(LoadSceneAndObjects(1));  // Charge le niveau 1 au lancement
+            string jsonContent = File.ReadAllText(filePath);
+            levelList = JsonUtility.FromJson<LevelList>(jsonContent);
+            Debug.Log($"✅ {levelList.levels.Length} niveaux chargés !");
         }
-        void LoadLevels()
+        else
         {
-            string filePath = "/home/xyubot/Documents/Ascencion/Asencion/Assets/StreamingAssets/levels.json";
-            if (File.Exists(filePath))
-            {
-                string jsonContent = File.ReadAllText(filePath);
-                levelList = JsonUtility.FromJson<LevelList>(jsonContent);
-            }
-            else Debug.LogError("❌ Fichier JSON non trouvé : " + filePath);
-            
+            Debug.LogError("❌ Fichier JSON non trouvé : " + filePath);
         }
-        public IEnumerator LoadSceneAndObjects(int levelId)
+    }
+
+    public void LoadScene(int levelId)
+    {
+        LevelData level = FindLevelById(levelId);
+        if (level == null)
         {
-            LevelData level = FindLevelById(levelId);
-            if (level == null)
-            {
-                Debug.LogError("Niveau non trouvé !");
-                yield break;
-            }
-            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(level.sceneName);
-            while (!asyncLoad.isDone) yield return null;
-            Debug.Log($"Scène {level.sceneName} chargée !");
+            Debug.LogError("Niveau non trouvé !");
+            return;
+        }
+
+        Debug.Log($"🔄 Chargement de la scène : {level.sceneName}...");
+        
+        // Ajout d'un écouteur pour attendre la fin du chargement de la scène
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+        // Charger la scène
+        SceneManager.LoadScene(level.sceneName);
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log($"✅ Scène {scene.name} chargée !");
+
+        // Récupérer l'ID du niveau
+        int levelId = GetLevelIdFromSceneName(scene.name);
+        LevelData level = FindLevelById(levelId);
+
+        if (level != null)
+        {
+            Debug.Log($"🛠 Création des objets pour {scene.name}...");
             CreateBlocks(level.blocks);
         }
-        LevelData FindLevelById(int levelId)
-        {
-            foreach (var level in levelList.levels)if (level.id == levelId) return level;
-            return null;
-        }
-        void CreateBlocks(Block[] blocks)
-        {
-            foreach (var block in blocks)
-            {
-                GameObject blockObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                Debug.Log("La case a ete poser");
-                blockObject.transform.position = block.position;
-                blockObject.transform.localScale = block.scale;
 
-                Texture2D texture = Resources.Load<Texture2D>(block.name.Replace(".jpeg", "").Replace(".png", ""));
-                if (texture != null)
-                {
-                    Renderer renderer = blockObject.GetComponent<Renderer>();
-                    renderer.material.mainTexture = texture;
-                }
-                else Debug.LogWarning($"Texture {block.name} introuvable !");
+        // Se désabonner pour éviter d'appeler plusieurs fois cette fonction
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private int GetLevelIdFromSceneName(string sceneName)
+    {
+        if (sceneName.StartsWith("Level"))
+        {
+            string numberPart = sceneName.Substring(5);
+            if (int.TryParse(numberPart, out int levelId))
+            {
+                return levelId;
+            }
+        }
+        return -1;
+    }
+
+    LevelData FindLevelById(int levelId)
+    {
+        foreach (var level in levelList.levels)
+        {
+            if (level.id == levelId)
+                return level;
+        }
+        return null;
+    }
+
+    void CreateBlocks(Block[] blocks)
+    {
+        foreach (var block in blocks)
+        {
+            GameObject blockObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            blockObject.transform.position = block.position;
+            blockObject.transform.localScale = block.scale;
+
+            string textureName = "Textures/" + block.name.Replace(".jpeg", "").Replace(".png", "");
+            Texture2D texture = Resources.Load<Texture2D>(textureName);
+
+            if (texture != null)
+            {
+                Renderer renderer = blockObject.GetComponent<Renderer>();
+                renderer.material.mainTexture = texture;
+            }
+            else
+            {
+                Debug.LogWarning($"⚠️ Texture {block.name} dans {textureName} introuvable !");
             }
         }
     }
+}
