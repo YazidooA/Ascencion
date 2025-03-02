@@ -1,83 +1,269 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-    [System.Serializable]
-    public class Block
-    {
-        public string name;
-        public Vector3 position;
-        public Vector3 scale;
-    }
+[System.Serializable]
+public class Block
+{
+    [SerializeField] private string name;
+    [SerializeField] private Vector3 position;
+    [SerializeField] private Vector3 scale;
+    [SerializeField] private bool repeat;
 
-    [System.Serializable]
-    public class LevelData
-    {
-        public int id;
-        public string sceneName;
-        public Block[] blocks;
-    }
+    public string Name { get => name; set => name = value; }
+    public Vector3 Position { get => position; set => position = value; }
+    public Vector3 Scale { get => scale; set => scale = value; }
+    public bool Repeat { get => repeat; set => repeat = value; }
+}
 
-    [System.Serializable]
-    public class LevelList
-    {
-        public LevelData[] levels;
-    }
+[System.Serializable]
+public class LevelData
+{
+    [SerializeField] private int id;
+    [SerializeField] private string sceneName;
+    [SerializeField] private Block[] blocks;
 
-    public class LevelMaker : MonoBehaviour
+    public int Id { get => id; set => id = value; }
+    public string SceneName { get => sceneName; set => sceneName = value; }
+    public Block[] Blocks { get => blocks; set => blocks = value; }
+}
+
+[System.Serializable]
+public class LevelList
+{
+    [SerializeField] private LevelData[] levels;
+    public LevelData[] Levels { get => levels; set => levels = value; }
+}
+
+public class LevelMaker : MonoBehaviour
+{
+    private LevelList levelList;
+    public string jsonFileName = "levels.json";
+
+void Start()
+{
+    LoadLevels();
+}
+
+
+    void LoadLevels()
     {
-        private LevelList levelList;
-        void Start()
+        string filePath = Path.Combine(Application.streamingAssetsPath, jsonFileName);
+        if (File.Exists(filePath))
         {
-            LoadLevels();
-            StartCoroutine(LoadSceneAndObjects(1));  // Charge le niveau 1 au lancement
-        }
-        void LoadLevels()
-        {
-            string filePath = "/home/xyubot/Documents/Ascencion/Asencion/Assets/StreamingAssets/levels.json";
-            if (File.Exists(filePath))
+            string jsonContent = File.ReadAllText(filePath);
+            levelList = JsonUtility.FromJson<LevelList>(jsonContent);
+
+            if (levelList == null)
             {
-                string jsonContent = File.ReadAllText(filePath);
-                levelList = JsonUtility.FromJson<LevelList>(jsonContent);
+                Debug.LogError("❌ Le chargement du JSON a échoué.");
+                return;
             }
-            else Debug.LogError("❌ Fichier JSON non trouvé : " + filePath);
-            
-        }
-        public IEnumerator LoadSceneAndObjects(int levelId)
-        {
-            LevelData level = FindLevelById(levelId);
-            if (level == null)
-            {
-                Debug.LogError("Niveau non trouvé !");
-                yield break;
-            }
-            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(level.sceneName);
-            while (!asyncLoad.isDone) yield return null;
-            Debug.Log($"Scène {level.sceneName} chargée !");
-            CreateBlocks(level.blocks);
-        }
-        LevelData FindLevelById(int levelId)
-        {
-            foreach (var level in levelList.levels)if (level.id == levelId) return level;
-            return null;
-        }
-        void CreateBlocks(Block[] blocks)
-        {
-            foreach (var block in blocks)
-            {
-                GameObject blockObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                Debug.Log("La case a ete poser");
-                blockObject.transform.position = block.position;
-                blockObject.transform.localScale = block.scale;
 
-                Texture2D texture = Resources.Load<Texture2D>(block.name.Replace(".jpeg", "").Replace(".png", ""));
-                if (texture != null)
+            Debug.Log($"✅ {levelList.Levels.Length} niveaux chargés !");
+            foreach (var level in levelList.Levels)
+            {
+                Debug.Log($"Niveau ID : {level.Id}, Nom de la scène : {level.SceneName}");
+            }
+        }
+        else
+        {
+            Debug.LogError("❌ Fichier JSON non trouvé : " + filePath);
+        }
+    }
+
+public void LoadScene(int levelId)
+{
+    LevelData level = FindLevelById(levelId);
+    if (level == null)
+    {
+        Debug.LogError("❌ Niveau non trouvé !");
+        return;
+    }
+
+    Debug.Log($"🔄 Chargement de la scène : {level.SceneName}...");
+
+    // Évite d'ajouter plusieurs fois la même méthode
+    SceneManager.sceneLoaded -= OnSceneLoaded;
+    SceneManager.sceneLoaded += OnSceneLoaded;
+
+    SceneManager.LoadScene(level.SceneName);
+}
+
+    void LoadCharacter(Vector3 spawnPosition)
+    {
+        string characterPath = "Player"; // Le prefab doit être dans Resources/Player.prefab
+        GameObject characterPrefab = Resources.Load<GameObject>(characterPath);
+
+        if (characterPrefab == null)
+        {
+            Debug.LogError($"❌ Impossible de charger le personnage : {characterPath}");
+            return;
+        }
+
+        GameObject character = Instantiate(characterPrefab, spawnPosition, Quaternion.identity);
+        character.name = "Player";
+
+        // Vérifier si le personnage a un Rigidbody et un Collider
+        SetupPlayerComponents(character);
+
+        Debug.Log($"✅ Personnage {characterPath} instancié avec succès à la position {spawnPosition} !");
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log($"✅ Scène {scene.name} chargée !");
+        int levelId = GetLevelIdFromSceneName(scene.name);
+        LevelData level = FindLevelById(levelId);
+
+        if (level != null)
+        {
+            Debug.Log($"🛠 Création des objets pour {scene.name}...");
+            CreateBlocks(Repeat0(level.Blocks));
+
+            // Attendre un court instant avant de spawner le personnage
+            StartCoroutine(DelayedCharacterSpawn(new Vector3(0, 1, 0)));
+        }
+
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    IEnumerator DelayedCharacterSpawn(Vector3 position)
+    {
+        yield return new WaitForSeconds(0.5f);
+        LoadCharacter(position);
+    }
+
+    private int GetLevelIdFromSceneName(string sceneName)
+    {
+        if (sceneName.StartsWith("Level"))
+        {
+            string numberPart = sceneName.Substring(5);
+            if (int.TryParse(numberPart, out int levelId))
+            {
+                return levelId;
+            }
+        }
+        return -1;
+    }
+
+    LevelData FindLevelById(int levelId)
+    {
+        Debug.Log($"🔍 Recherche du niveau avec ID : {levelId}");
+        foreach (var level in levelList.Levels)
+        {
+            if (level.Id == levelId)
+            {
+                Debug.Log($"✅ Niveau trouvé : {level.SceneName}");
+                return level;
+            }
+        }
+        Debug.LogWarning($"⚠️ Aucun niveau trouvé avec l'ID : {levelId}");
+        return null;
+    }
+
+    private Block[] Repeat0(Block[] blocks)
+    {
+        List<Block> res = new List<Block>();
+
+        foreach (var elt in blocks)
+        {
+            if (elt.Repeat)
+            {
+                float positionX = elt.Position.x;
+                for (float i = 1f; i <= 20f; i++)
                 {
-                    Renderer renderer = blockObject.GetComponent<Renderer>();
-                    renderer.material.mainTexture = texture;
+                    Block no = new Block
+                    {
+                        Name = elt.Name,
+                        Position = new Vector3(positionX + i, elt.Position.y, elt.Position.z),
+                        Scale = elt.Scale
+                    };
+                    res.Add(no);
                 }
-                else Debug.LogWarning($"Texture {block.name} introuvable !");
+            }
+            res.Add(elt);
+        }
+        Debug.Log($"✅ {res.Count} blocs générés !");
+        return res.ToArray();
+    }
+
+    void CreateBlocks(Block[] blocks)
+    {
+        Dictionary<GameObject, Texture2D> blockTextures = new Dictionary<GameObject, Texture2D>();
+
+        foreach (var block in blocks)
+        {
+            GameObject blockObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            blockObject.transform.position = block.Position;
+            blockObject.transform.localScale = block.Scale;
+
+            // Ajoute un Collider si absent
+            if (blockObject.GetComponent<BoxCollider>() == null)
+            {
+                blockObject.AddComponent<BoxCollider>();
+            }
+
+            // Ajoute un Rigidbody kinematic pour les blocs
+            Rigidbody rb = blockObject.AddComponent<Rigidbody>();
+            rb.isKinematic = true;
+
+            // Charge la texture
+            string textureName = block.Name.Replace(".jpeg", "").Replace(".jpg", "").Replace(".png", "");
+            Texture2D texture = Resources.Load<Texture2D>("Textures/" + textureName);
+
+            if (texture != null)
+            {
+                Renderer renderer = blockObject.GetComponent<Renderer>();
+                if (renderer != null)
+                {
+                    // Appliquer un shader URP pour éviter le rose
+                    Material material = new Material(Shader.Find("Universal Render Pipeline/Lit"));
+
+                    if (material != null)
+                    {
+                        material.mainTexture = texture;
+                        material.SetFloat("_Smoothness", 1f);
+                        material.SetFloat("_Metallic", 1f);
+                        renderer.material = material;
+
+                        // Stocke l'objet et sa texture
+                        blockTextures[blockObject] = texture;
+
+                        Debug.Log($"✅ Texture {texture.name} appliquée sur {blockObject.name}");
+
+                        // Tourner la texture de 180 degrés sur l'axe Y
+                        blockObject.transform.Rotate(0, 180, 0);
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"⚠️ Texture introuvable : {textureName}");
             }
         }
+
+        Debug.Log($"🎨 {blockTextures.Count} blocs créés avec des textures.");
     }
+
+    private void SetupPlayerComponents(GameObject player)
+    {
+        Rigidbody rb = player.GetComponent<Rigidbody>();
+        if (rb == null)
+        {
+            rb = player.AddComponent<Rigidbody>();
+            rb.mass = 1f;
+            rb.freezeRotation = true;
+        }
+
+        Collider col = player.GetComponent<Collider>();
+        if (col == null)
+        {
+            col = player.AddComponent<CapsuleCollider>();
+        }
+
+        player.SetActive(true);
+    }
+}

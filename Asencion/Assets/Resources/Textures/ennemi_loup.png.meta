@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: ec717c853a166d5568198a7f1bb8320b
+guid: 5e6c4d333963a10dcb003f4f8f31f5a0
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4679463978899173294
-    second: herbe - Copie_0
+      213: -6558121796448539775
+    second: ennemi_loup_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: herbe - Copie_0
+      name: ennemi_loup_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 32
+        x: 256
+        y: 46
+        width: 242
+        height: 243
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2509a76dd443f0fb0800000000000000
-      internalID: -4679463978899173294
+      spriteID: 18b20f8f8fedcf4a0800000000000000
+      internalID: -6558121796448539775
       vertices: []
       indices: 
       edges: []
@@ -134,8 +134,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      herbe - Copie_0: -4679463978899173294
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

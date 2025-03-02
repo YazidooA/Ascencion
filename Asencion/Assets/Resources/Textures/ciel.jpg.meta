@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 874c415a1b1db5457bcf8abc092e9fb7
+guid: 9c7a128dd138e1745be6cf7951aeeee2
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8149985421146569846
-    second: terre - Copie_0
+      213: 3265591010657065513
+    second: ciel_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: terre - Copie_0
+      name: ciel_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 32
+        width: 1920
+        height: 960
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a8342ff907f65ee80800000000000000
-      internalID: -8149985421146569846
+      spriteID: 92a5cebe8b5b15d20800000000000000
+      internalID: 3265591010657065513
       vertices: []
       indices: 
       edges: []
@@ -134,8 +134,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      terre - Copie_0: -8149985421146569846
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,43 +1,52 @@
-using System.Collections;
-using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 public class LevelManager : MonoBehaviour
+{
+    private void Start()
     {
-        private void Start()
+        LevelMaker levelManager = FindFirstObjectByType<LevelMaker>();
+
+        if (levelManager == null)
         {
-            LevelMaker levelManager = FindFirstObjectByType<LevelMaker>();
-            Debug.Log("It is good, you moron?");
-            if (levelManager is null)
-            {
-                Debug.LogError("⚠️ Aucun LevelManager trouvé dans la scène !");
-                return;
-            }
-            // Récupérer le nom de la scène actuelle
-            string sceneName = SceneManager.GetActiveScene().name;
-            // Extraire le numéro du niveau depuis "LevelX"
-            int levelId = GetLevelIdFromSceneName(sceneName);
-            if (levelId > 0)
-            {
-                Debug.Log($"✅ Chargement des objets pour {sceneName} (ID: {levelId})...");
-                levelManager.StartCoroutine(levelManager.LoadSceneAndObjects(levelId));
-            }
-            else Debug.LogWarning($"⚠️ Impossible de trouver un ID de niveau pour {sceneName}");
-            
+            Debug.LogError("⚠️ Aucun LevelManager trouvé dans la scène !");
+            return;
         }
 
-        private int GetLevelIdFromSceneName(string sceneName)
+        // Récupérer le nom de la scène actuelle
+        string sceneName = SceneManager.GetActiveScene().name;
+        
+        // Extraire le numéro du niveau depuis "LevelX"
+        int levelId = GetLevelIdFromSceneName(sceneName);
+        
+        if (levelId > 0)
         {
-            // Ex: Convertir "Level1" -> 1, "Level2" -> 2, etc.
-            if (sceneName.StartsWith("Level"))
-            {
-                string numberPart = sceneName.Substring(5); // Enlève "Level"
-                Debug.Log("Trouver");
-                if (int.TryParse(numberPart, out int levelId)) return levelId;
-            }
-            Debug.Log("PAS TROUVER");
-            return -1; // Erreur
+            Debug.Log($"✅ Chargement des objets pour {sceneName} (ID: {levelId})...");
+            
+            // Utilisation de StartCoroutine pour appeler la méthode LoadSceneAndObjects
+            levelManager.LoadScene(levelId);
+        }
+        else
+        {
+            Debug.LogWarning($"⚠️ Impossible de trouver un ID de niveau pour {sceneName}");
         }
     }
 
+private int GetLevelIdFromSceneName(string sceneName)
+{
+    Debug.Log($"🛠 Extraction de l'ID à partir du nom de la scène : {sceneName}");
+    if (sceneName.StartsWith("Level"))
+    {
+        string numberPart = sceneName.Substring(5); // Enlève "Level"
+        if (int.TryParse(numberPart, out int levelId))
+        {
+            Debug.Log($"✅ ID extrait : {levelId}");
+            return levelId;
+        }
+    }
+    Debug.LogWarning("⚠️ Erreur lors de l'extraction de l'ID.");
+    return -1; // Retourne -1 en cas d'erreur
+}
 
+
+}
