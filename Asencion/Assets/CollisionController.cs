@@ -18,5 +18,14 @@ public class CollisionController : MonoBehaviour
     {
 
     }
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+
+        if (collision.gameObject.tag == "Shop")
+        {
+            SceneManager.LoadScene("Scene_interface_shop");
+            Debug.Log("Collision with Shop");
+        }
+    }
 }
 
