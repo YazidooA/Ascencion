@@ -7,34 +7,80 @@ using UnityEngine.SceneManagement;
 [System.Serializable]
 public class Block
 {
-    [SerializeField] private string name;
-    [SerializeField] private Vector3 position;
-    [SerializeField] private Vector3 scale;
-    [SerializeField] private bool repeat;
+    [SerializeField]
+    private string name;
+    [SerializeField]
+    private Vector3 position;
+    [SerializeField]
+    private Vector3 scale;
+    [SerializeField]
+    private bool repeat;
 
-    public string Name { get => name; set => name = value; }
-    public Vector3 Position { get => position; set => position = value; }
-    public Vector3 Scale { get => scale; set => scale = value; }
-    public bool Repeat { get => repeat; set => repeat = value; }
+    public string Name
+    {
+        get => name;
+        set => name = value;
+    }
+
+    public Vector3 Position
+    {
+        get => position;
+        set => position = value;
+    }
+
+    public Vector3 Scale
+    {
+        get => scale;
+        set => scale = value;
+    }
+
+    public bool Repeat
+    {
+        get => repeat;
+        set => repeat = value;
+    }
 }
 
 [System.Serializable]
 public class LevelData
 {
-    [SerializeField] private int id;
-    [SerializeField] private string sceneName;
-    [SerializeField] private Block[] blocks;
+    [SerializeField]
+    private int id;
+    [SerializeField]
+    private string sceneName;
+    [SerializeField]
+    private Block[] blocks;
 
-    public int Id { get => id; set => id = value; }
-    public string SceneName { get => sceneName; set => sceneName = value; }
-    public Block[] Blocks { get => blocks; set => blocks = value; }
+    public int Id
+    {
+        get => id;
+        set => id = value;
+    }
+
+    public string SceneName
+    {
+        get => sceneName;
+        set => sceneName = value;
+    }
+
+    public Block[] Blocks
+    {
+        get => blocks;
+        set => blocks = value;
+    }
 }
 
 [System.Serializable]
 public class LevelList
 {
-    [SerializeField] private LevelData[] levels;
-    public LevelData[] Levels { get => levels; set => levels = value; }
+    [SerializeField]
+    private LevelData[] levels;
+
+    public LevelData[] Levels
+    {
+        get => levels;
+        set => levels = value;
+    }
 }
 
 public class LevelMaker : MonoBehaviour
@@ -42,11 +88,10 @@ public class LevelMaker : MonoBehaviour
     private LevelList levelList;
     public string jsonFileName = "levels.json";
 
-void Start()
-{
-    LoadLevels();
-}
-
+    void Start()
+    {
+        LoadLevels();
+    }
 
     void LoadLevels()
     {
@@ -74,42 +119,18 @@ void Start()
         }
     }
 
-public void LoadScene(int levelId)
-{
-    LevelData level = FindLevelById(levelId);
-    if (level == null)
+    public void LoadScene(int levelId)
     {
-        Debug.LogError("❌ Niveau non trouvé !");
-        return;
-    }
-
-    Debug.Log($"🔄 Chargement de la scène : {level.SceneName}...");
-
-    // Évite d'ajouter plusieurs fois la même méthode
-    SceneManager.sceneLoaded -= OnSceneLoaded;
-    SceneManager.sceneLoaded += OnSceneLoaded;
-
-    SceneManager.LoadScene(level.SceneName);
-}
-
-    void LoadCharacter(Vector3 spawnPosition)
-    {
-        string characterPath = "Player"; // Le prefab doit être dans Resources/Player.prefab
-        GameObject characterPrefab = Resources.Load<GameObject>(characterPath);
-
-        if (characterPrefab == null)
+        LevelData level = FindLevelById(levelId);
+        if (level == null)
         {
-            Debug.LogError($"❌ Impossible de charger le personnage : {characterPath}");
+            Debug.LogError("❌ Niveau non trouvé !");
             return;
         }
 
-        GameObject character = Instantiate(characterPrefab, spawnPosition, Quaternion.identity);
-        character.name = "Player";
-
-        // Vérifier si le personnage a un Rigidbody et un Collider
-        SetupPlayerComponents(character);
-
-        Debug.Log($"✅ Personnage {characterPath} instancié avec succès à la position {spawnPosition} !");
+        Debug.Log($"🔄 Chargement de la scène : {level.SceneName}...");
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.LoadScene(level.SceneName);
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -122,18 +143,9 @@ public void LoadScene(int levelId)
         {
             Debug.Log($"🛠 Création des objets pour {scene.name}...");
             CreateBlocks(Repeat0(level.Blocks));
-
-            // Attendre un court instant avant de spawner le personnage
-            StartCoroutine(DelayedCharacterSpawn(new Vector3(0, 1, 0)));
         }
 
         SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    IEnumerator DelayedCharacterSpawn(Vector3 position)
-    {
-        yield return new WaitForSeconds(0.5f);
-        LoadCharacter(position);
     }
 
     private int GetLevelIdFromSceneName(string sceneName)
@@ -154,6 +166,7 @@ public void LoadScene(int levelId)
         Debug.Log($"🔍 Recherche du niveau avec ID : {levelId}");
         foreach (var level in levelList.Levels)
         {
+            Debug.Log($"Vérification du niveau avec ID : {level.Id}");
             if (level.Id == levelId)
             {
                 Debug.Log($"✅ Niveau trouvé : {level.SceneName}");
@@ -164,31 +177,29 @@ public void LoadScene(int levelId)
         return null;
     }
 
-    private Block[] Repeat0(Block[] blocks)
-    {
-        List<Block> res = new List<Block>();
-
-        foreach (var elt in blocks)
+   private Block[] Repeat0(Block[] blocks)
         {
-            if (elt.Repeat)
+            List<Block> res = new List<Block>();
+
+            foreach (var elt in blocks)
             {
-                float positionX = elt.Position.x;
-                for (float i = 1f; i <= 20f; i++)
+                if (elt.Repeat)
                 {
-                    Block no = new Block
+                    float positionX = elt.Position.x;
+                    for (float i = 1f; i <= 20f; i++)
                     {
-                        Name = elt.Name,
-                        Position = new Vector3(positionX + i, elt.Position.y, elt.Position.z),
-                        Scale = elt.Scale
-                    };
-                    res.Add(no);
+                        Block no = new Block();
+                        no.Name=elt.Name;
+                        no.Position=new Vector3(positionX + i, elt.Position.y, elt.Position.z);
+                        no.Scale=elt.Scale;
+                        res.Add(no); 
+                    }
                 }
+                res.Add(elt); 
             }
-            res.Add(elt);
+            Debug.Log($"✅ {res.Count} blocs générés !");
+            return res.ToArray();
         }
-        Debug.Log($"✅ {res.Count} blocs générés !");
-        return res.ToArray();
-    }
 
     void CreateBlocks(Block[] blocks)
     {
@@ -200,17 +211,17 @@ public void LoadScene(int levelId)
             blockObject.transform.position = block.Position;
             blockObject.transform.localScale = block.Scale;
 
-            // Ajoute un Collider si absent
+            // ✅ Ajoute un Collider
             if (blockObject.GetComponent<BoxCollider>() == null)
             {
                 blockObject.AddComponent<BoxCollider>();
             }
 
-            // Ajoute un Rigidbody kinematic pour les blocs
+            // ✅ Ajoute un Rigidbody (collision détectable mais pas de chute)
             Rigidbody rb = blockObject.AddComponent<Rigidbody>();
             rb.isKinematic = true;
 
-            // Charge la texture
+            // ✅ Charge la texture
             string textureName = block.Name.Replace(".jpeg", "").Replace(".jpg", "").Replace(".png", "");
             Texture2D texture = Resources.Load<Texture2D>("Textures/" + textureName);
 
@@ -219,7 +230,7 @@ public void LoadScene(int levelId)
                 Renderer renderer = blockObject.GetComponent<Renderer>();
                 if (renderer != null)
                 {
-                    // Appliquer un shader URP pour éviter le rose
+                    // ✅ Appliquer un shader URP pour éviter le rose
                     Material material = new Material(Shader.Find("Universal Render Pipeline/Lit"));
 
                     if (material != null)
@@ -229,12 +240,12 @@ public void LoadScene(int levelId)
                         material.SetFloat("_Metallic", 1f);
                         renderer.material = material;
 
-                        // Stocke l'objet et sa texture
+                        // ✅ Stocke l'objet et sa texture
                         blockTextures[blockObject] = texture;
 
                         Debug.Log($"✅ Texture {texture.name} appliquée sur {blockObject.name}");
 
-                        // Tourner la texture de 180 degrés sur l'axe Y
+                        // ✅ Tourner la texture de 180 degrés sur l'axe Y
                         blockObject.transform.Rotate(0, 180, 0);
                     }
                 }
@@ -246,24 +257,5 @@ public void LoadScene(int levelId)
         }
 
         Debug.Log($"🎨 {blockTextures.Count} blocs créés avec des textures.");
-    }
-
-    private void SetupPlayerComponents(GameObject player)
-    {
-        Rigidbody rb = player.GetComponent<Rigidbody>();
-        if (rb == null)
-        {
-            rb = player.AddComponent<Rigidbody>();
-            rb.mass = 1f;
-            rb.freezeRotation = true;
-        }
-
-        Collider col = player.GetComponent<Collider>();
-        if (col == null)
-        {
-            col = player.AddComponent<CapsuleCollider>();
-        }
-
-        player.SetActive(true);
     }
 }
