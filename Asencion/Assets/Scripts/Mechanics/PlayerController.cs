@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
-using Photon.Pun;
-public class PlayerController : MonoBehaviourPun
+
+public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed = 5f;
-    [SerializeField] private float jumpForce = 3f;
+    [SerializeField] private float jumpForce = 8f;
     [SerializeField] private float groundHeight = -1f;
     [SerializeField] private int jumpCooldown = 0;
     [SerializeField] private float dashSpeed = 5f;
@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviourPun
     private float jumpTimer = 0;
     private float dashTimer = 0f;
     private bool isDashing = false;
+     private Rigidbody2D rb;
+    private bool isGrounded;
+
     void Start()
     {
         transform.position = new Vector3(transform.position.x, groundHeight, transform.position.z);
@@ -36,7 +39,7 @@ public class PlayerController : MonoBehaviourPun
     void Deplacement()
     {
         Vector3 move = Vector3.zero;
-        if (Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.LeftArrow))
         {
             move -= transform.right;
             if (Input.GetKey(KeyCode.F))
@@ -59,11 +62,18 @@ public class PlayerController : MonoBehaviourPun
 
     void Sauter()
     {
-        if (jumpTimer <= 0 && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Z)) || Input.GetKeyDown(KeyCode.UpArrow))
+        if (isGrounded && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.UpArrow)))
         {
-            transform.position += Vector3.up * jumpForce;
-            jumpTimer = jumpCooldown;
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         }
-        if (jumpTimer > 0) jumpTimer -= Time.deltaTime;
+    }
+
+    void OnDrawGizmos()
+    {
+        if (groundCheck != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+        }
     }
 }
