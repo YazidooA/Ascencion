@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      ennemi_loup_0: -6558121796448539775
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

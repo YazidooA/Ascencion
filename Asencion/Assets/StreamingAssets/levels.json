@@ -25,37 +25,52 @@
         },
         {
           "name": "neige.png",
-          "position": { "x": 2, "y": 4, "z": 0 },
+          "position": { "x": 2, "y": 1, "z": 0 },
           "scale": { "x": 1, "y": 1, "z": 1 }
         },
         {
           "name": "neige.png",
-          "position": { "x": 3, "y": 4, "z": 0 },
+          "position": { "x": 3, "y": 2, "z": 0 },
           "scale": { "x": 1, "y": 1, "z": 1 }
         },
         {
           "name": "neige.png",
-          "position": { "x": 4, "y": 4, "z": 0 },
+          "position": { "x": 4, "y": 2, "z": 0 },
           "scale": { "x": 1, "y": 1, "z": 1 }
         },
         {
           "name": "neige.png",
-          "position": { "x": 5, "y": 5, "z": 0 },
+          "position": { "x": 6, "y": 2, "z": 0 },
           "scale": { "x": 1, "y": 1, "z": 1 }
         },
         {
           "name": "neige.png",
-          "position": { "x": 6, "y": 6, "z": 0 },
+          "position": { "x": 7, "y": 3, "z": 0 },
           "scale": { "x": 1, "y": 1, "z": 1 }
         },
         {
           "name": "neige.png",
-          "position": { "x": 7, "y": 7, "z": 0 },
+          "position": { "x": 8, "y": 4, "z": 0 },
           "scale": { "x": 1, "y": 1, "z": 1 }
         },
         {
           "name": "neige.png",
-          "position": { "x": 8, "y": 8, "z": 0 },
+          "position": { "x": 9, "y": 4, "z": 0 },
+          "scale": { "x": 1, "y": 1, "z": 1 }
+        },
+        {
+          "name": "neige.png",
+          "position": { "x": 11, "y": 2, "z": 0 },
+          "scale": { "x": 1, "y": 1, "z": 1 }
+        },
+        {
+          "name": "neige.png",
+          "position": { "x": 12, "y": 2, "z": 0 },
+          "scale": { "x": 1, "y": 1, "z": 1 }
+        },
+        {
+          "name": "neige.png",
+          "position": { "x": 13, "y": 3, "z": 0 },
           "scale": { "x": 1, "y": 1, "z": 1 }
         },
         {

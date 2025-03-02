@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Perso-boost de vitesse2_0: -8021893553520901788
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
