@@ -11,8 +11,9 @@ public class PlayerController : MonoBehaviour
     private float jumpTimer = 0;
     private float dashTimer = 0f;
     private bool isDashing = false;
-     private Rigidbody2D rb;
+    private Rigidbody2D rb;
     private bool isGrounded;
+    private 
 
     void Start()
     {
@@ -68,12 +69,4 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void OnDrawGizmos()
-    {
-        if (groundCheck != null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
-        }
-    }
 }
