@@ -12,49 +12,49 @@
       "description": "Camp 0: là où les joueurs se rejoignent/ lobby\nNiveau 1: Quelques obstacles (niveau tuto) chill + premier ennemis (1-2 loups) -> se défendre avec un couteau\nCamp 1: Afficher le message “Vous arrivez sur un glacier faites attention” Chaussures crantées pour ne pas glisser.\nNiveau 2: Sol glissant avec un risque de glisser tout en bas mais possibilité de se rattraper.",
       "blocks": [
         {
-          "name": "neige.png",
-          "position": { "x": 0, "y": 0, "z": 0 },
-          "scale": { "x": 1, "y": 1, "z": 1 },
-          "repeat": true
-        },
-        {
           "name": "neige-to-terre.png",
-          "position": { "x": 0, "y": -1, "z": 0 },
+          "position": { "x": -1, "y": 0, "z": 0 },
           "scale": { "x": 1, "y": 1, "z": 1 },
           "repeat": true
         },
         {
-          "name": "pierre.png",
+          "name": "terre.png",
+          "position": { "x": -1, "y": -1, "z": 0 },
+          "scale": { "x": 1, "y": 1, "z": 1 },
+          "repeat": true
+        },
+        {
+          "name": "neige.png",
           "position": { "x": 2, "y": 4, "z": 0 },
           "scale": { "x": 1, "y": 1, "z": 1 }
         },
         {
-          "name": "pierre.png",
+          "name": "neige.png",
           "position": { "x": 3, "y": 4, "z": 0 },
           "scale": { "x": 1, "y": 1, "z": 1 }
         },
         {
-          "name": "pierre.png",
+          "name": "neige.png",
           "position": { "x": 4, "y": 4, "z": 0 },
           "scale": { "x": 1, "y": 1, "z": 1 }
         },
         {
-          "name": "pierre.png",
+          "name": "neige.png",
           "position": { "x": 5, "y": 5, "z": 0 },
           "scale": { "x": 1, "y": 1, "z": 1 }
         },
         {
-          "name": "pierre.png",
+          "name": "neige.png",
           "position": { "x": 6, "y": 6, "z": 0 },
           "scale": { "x": 1, "y": 1, "z": 1 }
         },
         {
-          "name": "pierre.png",
+          "name": "neige.png",
           "position": { "x": 7, "y": 7, "z": 0 },
           "scale": { "x": 1, "y": 1, "z": 1 }
         },
         {
-          "name": "pierre.png",
+          "name": "neige.png",
           "position": { "x": 8, "y": 8, "z": 0 },
           "scale": { "x": 1, "y": 1, "z": 1 }
         },
