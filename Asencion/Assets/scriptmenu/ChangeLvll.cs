@@ -34,4 +34,8 @@ public class ChangeLvll : MonoBehaviour
         SceneManager.LoadScene("menuscene");
     }
 
+    public void Selection()
+    {
+        SceneManager.LoadScene("changescene");
+    }
 }
