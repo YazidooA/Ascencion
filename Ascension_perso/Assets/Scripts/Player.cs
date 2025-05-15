@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     [SerializeField] private storeData savedDatas;
 
     [SerializeField] private GameObject text;
-    [SerializeField] private Transform collisionCheck;
+    [SerializeField] private Transform? collisionCheck;
     [SerializeField] private LayerMask shopLayer;
 
     private int Money => savedDatas.Money;

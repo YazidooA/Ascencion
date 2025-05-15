@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      feuille-arbre-neige_0: -8561815329659010897
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
