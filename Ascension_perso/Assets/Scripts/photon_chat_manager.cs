@@ -143,13 +143,13 @@ public class ChatManager : MonoBehaviourPunCallbacks
         }
     }
 
-    public override void OnPlayerEnteredRoom(Player newPlayer)
+    public void OnPlayerEnteredRoom(Player newPlayer)
     {
-        AddSystemMessage(newPlayer.NickName + " a rejoint la partie");
+        AddSystemMessage(newPlayer.Name + " a rejoint la partie");
     }
 
-    public override void OnPlayerLeftRoom(Player otherPlayer)
+    public void OnPlayerLeftRoom(Player otherPlayer)
     {
-        AddSystemMessage(otherPlayer.NickName + " a quitté la partie");
+        AddSystemMessage(otherPlayer.Name + " a quitté la partie");
     }
 }

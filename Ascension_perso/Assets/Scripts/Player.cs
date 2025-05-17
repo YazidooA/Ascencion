@@ -5,7 +5,9 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
     [SerializeField] private storeData savedDatas;
+    private string name;
 
+    public string Name { get => name; set => name = value; }
     [SerializeField] private GameObject text;
     [SerializeField] private Transform? collisionCheck;
     [SerializeField] private LayerMask shopLayer;

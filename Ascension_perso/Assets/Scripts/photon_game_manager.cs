@@ -70,34 +70,5 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         Application.Quit();
     }
-    
-    #region Photon Callbacks
-    
-    public override void OnLeftRoom()
-    {
-        // Charger la scène du menu principal
-        PhotonNetwork.LoadLevel(0);
-    }
-    
-    public override void OnPlayerEnteredRoom(Player newPlayer)
-    {
-        Debug.Log("Un joueur a rejoint: " + newPlayer.NickName);
-        // Vous pouvez ajouter des notifications ou mettre à jour l'UI ici
-    }
-    
-    public override void OnPlayerLeftRoom(Player otherPlayer)
-    {
-        Debug.Log("Un joueur est parti: " + otherPlayer.NickName);
-        // Vous pouvez ajouter des notifications ou mettre à jour l'UI ici
-    }
-    
-    public override void OnDisconnected(DisconnectCause cause)
-    {
-        Debug.Log("Déconnecté du serveur: " + cause.ToString());
-        
-        // Charger la scène du menu principal
-        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
-    }
-    
-    #endregion
+
 }

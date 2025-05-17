@@ -102,66 +102,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
 
     #endregion
-
-    #region Photon Callbacks
-
-    public override void OnConnectedToMaster()
-    {
-        Debug.Log("Connecté au Master Server");
-        connectButton.interactable = true;
-    }
-
-    public override void OnJoinedLobby()
-    {
-        Debug.Log("Rejoint le lobby");
-        loginPanel.SetActive(false);
-        lobbyPanel.SetActive(true);
-        cachedRoomList.Clear();
-    }
-
-    public override void OnRoomListUpdate(List<RoomInfo> roomList)
-    {
-        // Mise à jour de la liste des salons
-        UpdateCachedRoomList(roomList);
-        UpdateRoomListView();
-    }
-
-    public override void OnJoinedRoom()
-    {
-        Debug.Log("Rejoint la salle: " + PhotonNetwork.CurrentRoom.Name);
-        lobbyPanel.SetActive(false);
-        roomPanel.SetActive(true);
-
-        roomNameText.text = PhotonNetwork.CurrentRoom.Name;
-
-        UpdatePlayerListView();
-
-        // Seul le maître du client peut lancer la partie
-        startGameButton.interactable = PhotonNetwork.IsMasterClient;
-    }
-
-    public override void OnLeftRoom()
-    {
-        roomPanel.SetActive(false);
-        lobbyPanel.SetActive(true);
-    }
-
-    public override void OnPlayerEnteredRoom(Player newPlayer)
-    {
-        UpdatePlayerListView();
-    }
-
-    public override void OnPlayerLeftRoom(Player otherPlayer)
-    {
-        UpdatePlayerListView();
-    }
-
-    public override void OnMasterClientSwitched(Player newMasterClient)
-    {
-        startGameButton.interactable = PhotonNetwork.IsMasterClient;
-    }
-
-    #endregion
+    
 
     #region Private Methods
 
