@@ -2,12 +2,15 @@ using System.Collections;
 using UnityEngine;
 using System;
 using UnityEngine.SceneManagement;
+using Photon.Realtime;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
+
 public class Player : MonoBehaviour
 {
     [SerializeField] private storeData savedDatas;
-    private string name;
-
-    public string Name { get => name; set => name = value; }
+    private string _name;
+    
+    
     [SerializeField] private GameObject text;
     [SerializeField] private Transform? collisionCheck;
     [SerializeField] private LayerMask shopLayer;
@@ -42,15 +45,7 @@ public class Player : MonoBehaviour
     {
         return Physics2D.OverlapCircle(collisionCheck.position, 0.2f, shopLayer);
     }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Coins"))
-        {
-            savedDatas.Money += coinValue;
-            Destroy(other.gameObject);
-        }
-    }
+    
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Enemy"))

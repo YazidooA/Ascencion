@@ -39,6 +39,11 @@ MonoBehaviour:
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
+  - ReceiveMessage
+  - RPC_AddChatMessage
+  - RPC_AddSystemMessage
+  - PlayJumpEffect
+  - ToggleObjectState
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 0

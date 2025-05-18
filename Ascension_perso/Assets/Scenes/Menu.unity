@@ -529,6 +529,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerListScrollView
       objectReference: {fileID: 0}
+    - target: {fileID: 2137055813226141702, guid: 8f4005a4c0bbd8059874c8adc8bb70a9, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2137055813226141702, guid: 8f4005a4c0bbd8059874c8adc8bb70a9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2137055813226141702, guid: 8f4005a4c0bbd8059874c8adc8bb70a9, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2137055813226141702, guid: 8f4005a4c0bbd8059874c8adc8bb70a9, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2228504041515071004, guid: 8f4005a4c0bbd8059874c8adc8bb70a9, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2228504041515071004, guid: 8f4005a4c0bbd8059874c8adc8bb70a9, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4169556487646092141, guid: 8f4005a4c0bbd8059874c8adc8bb70a9, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -547,6 +571,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7524449836311107953, guid: 8f4005a4c0bbd8059874c8adc8bb70a9, type: 3}
       propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7598708871376226590, guid: 8f4005a4c0bbd8059874c8adc8bb70a9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7598708871376226590, guid: 8f4005a4c0bbd8059874c8adc8bb70a9, type: 3}
+      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -94,6 +94,8 @@ GameObject:
   - component: {fileID: 3373160278968121160}
   - component: {fileID: 228795773657433437}
   - component: {fileID: 3146669048798731878}
+  - component: {fileID: 2047416581649402473}
+  - component: {fileID: 6844861126567196171}
   m_Layer: 0
   m_Name: player
   m_TagString: Untagged
@@ -133,29 +135,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 082ee49c5d2cdb54dbf907fdb420a4d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 6
-  jumpingPower: 12
-  allowDash: 1
-  dashingPower: 60
-  allowWallSticking: 0
-  wallSlidingSpeed: 2
-  wallJumpingPower: {x: 25, y: 10}
-  rb: {fileID: 3373160278968121160}
-  groundCheck: {fileID: 7273307357085709844}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  tr: {fileID: 228795773657433437}
-  wallCheck: {fileID: 7331443326879202025}
-  wallLayer:
-    serializedVersion: 2
-    m_Bits: 192
-  animator: {fileID: 3146669048798731878}
+  savedDatas: {fileID: 0}
   text: {fileID: 8816343671490570696}
-  shopCheck: {fileID: 4418325234739685017}
+  collisionCheck: {fileID: 0}
   shopLayer:
     serializedVersion: 2
     m_Bits: 256
+  coinValue: 1
+  damages: 20
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!212 &7250736759067875543
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -422,6 +412,44 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2047416581649402473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1852224189577435732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &6844861126567196171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1852224189577435732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &1896061101141941052
 GameObject:
   m_ObjectHideFlags: 0
