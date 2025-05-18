@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1381fea676589214193489f51db69620
+guid: 7c39769c46bf2d54282fed9c9436395e
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -147,8 +147,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      feuille-arbre-neige_0: -8561815329659010897
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

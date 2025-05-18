@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Ascension_perso/Assets/Scenes/Lobby.unity.meta
 guid: 7dd40b3d88dc07e108c8a14153572c02
+========
+guid: 98917ef3b673bef4faaf0e7dce3725ad
+>>>>>>>> origin/jbg:Ascension_perso/Assets/Scenes/scene_shop.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 

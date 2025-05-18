@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Ascension_perso/Assets/prefabs/ChatMessage.prefab.meta
 guid: f26a026c4148b9433ae08fece3408844
+========
+guid: d88a237adb2dc644db7fc22b8c73a9ff
+>>>>>>>> origin/jbg:Ascension_perso/Assets/prefabs/Coin.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 

@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Ascension_perso/Assets/NavMeshComponents.meta
 guid: 9366ab9ddd03ab34fabfb1a03325a8c4
+========
+guid: d574b2fb4661c408f80aa76c0182931f
+>>>>>>>> origin/jbg:Ascension_perso/Assets/Settings/Scenes.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

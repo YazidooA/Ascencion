@@ -1,10 +1,19 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Ascension_perso/Assets/Textures/dash.png.meta
+guid: ed43fd58c01b479438be94ba96053e3b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7110878671101974141
+    second: dash_0
+========
 guid: f9cf3dd59a0cf1244b7f632883b53417
 TextureImporter:
   internalIDToNameTable:
   - first:
       213: -4965294405290667475
     second: glace_0
+>>>>>>>> origin/jbg:Ascension_perso/Assets/Textures/glace.jpeg.meta
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,6 +122,15 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
+<<<<<<<< HEAD:Ascension_perso/Assets/Textures/dash.png.meta
+      name: dash_0
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 229
+        width: 461
+        height: 515
+========
       name: glace_0
       rect:
         serializedVersion: 2
@@ -120,6 +138,7 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
+>>>>>>>> origin/jbg:Ascension_perso/Assets/Textures/glace.jpeg.meta
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +147,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
+<<<<<<<< HEAD:Ascension_perso/Assets/Textures/dash.png.meta
+      spriteID: d765fefe97aeea260800000000000000
+      internalID: 7110878671101974141
+========
       spriteID: d225a6fab0bb71bb0800000000000000
       internalID: -4965294405290667475
+>>>>>>>> origin/jbg:Ascension_perso/Assets/Textures/glace.jpeg.meta
       vertices: []
       indices: 
       edges: []
@@ -147,8 +171,12 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
+<<<<<<<< HEAD:Ascension_perso/Assets/Textures/dash.png.meta
     nameFileIdTable:
-      glace_0: -4965294405290667475
+      dash_0: 7110878671101974141
+========
+    nameFileIdTable: {}
+>>>>>>>> origin/jbg:Ascension_perso/Assets/Textures/glace.jpeg.meta
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

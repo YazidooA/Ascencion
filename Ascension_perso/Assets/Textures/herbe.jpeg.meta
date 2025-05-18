@@ -1,10 +1,19 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Ascension_perso/Assets/Textures/glace.jpeg.meta
+guid: f9cf3dd59a0cf1244b7f632883b53417
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4965294405290667475
+    second: glace_0
+========
 guid: acaa2a23ec0b1574ca43d87d48c6dba0
 TextureImporter:
   internalIDToNameTable:
   - first:
       213: -8049798659219159682
     second: herbe_0
+>>>>>>>> origin/jbg:Ascension_perso/Assets/Textures/herbe.jpeg.meta
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,7 +122,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
+<<<<<<<< HEAD:Ascension_perso/Assets/Textures/glace.jpeg.meta
+      name: glace_0
+========
       name: herbe_0
+>>>>>>>> origin/jbg:Ascension_perso/Assets/Textures/herbe.jpeg.meta
       rect:
         serializedVersion: 2
         x: 0
@@ -128,8 +141,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
+<<<<<<<< HEAD:Ascension_perso/Assets/Textures/glace.jpeg.meta
+      spriteID: d225a6fab0bb71bb0800000000000000
+      internalID: -4965294405290667475
+========
       spriteID: e7583d3e4ce594090800000000000000
       internalID: -8049798659219159682
+>>>>>>>> origin/jbg:Ascension_perso/Assets/Textures/herbe.jpeg.meta
       vertices: []
       indices: 
       edges: []
@@ -147,8 +165,12 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
+<<<<<<<< HEAD:Ascension_perso/Assets/Textures/glace.jpeg.meta
     nameFileIdTable:
-      herbe_0: -8049798659219159682
+      glace_0: -4965294405290667475
+========
+    nameFileIdTable: {}
+>>>>>>>> origin/jbg:Ascension_perso/Assets/Textures/herbe.jpeg.meta
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

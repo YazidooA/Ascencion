@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: a9dbef58b8388954ea5aae56cceddcb3
+guid: 6b569226bcb941e499afe7cf867515f3
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 267669722267802125
-    second: glace-to-terre_0
+      213: 3222776479912776169
+    second: feuille_neige_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,7 +113,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: glace-to-terre_0
+      name: feuille_neige_0
       rect:
         serializedVersion: 2
         x: 0
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d0a56e8b134f6b300800000000000000
-      internalID: 267669722267802125
+      spriteID: 9e15fab222a99bc20800000000000000
+      internalID: 3222776479912776169
       vertices: []
       indices: 
       edges: []

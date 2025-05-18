@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Ascension_perso/Assets/prefabs/NetworkManager.prefab.meta
 guid: 72096087cac470613ade8fa38f315244
+========
+guid: 29b94ae90a00c0f4e955ced8a104e590
+>>>>>>>> origin/jbg:Ascension_perso/Assets/prefabs/Shop.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 

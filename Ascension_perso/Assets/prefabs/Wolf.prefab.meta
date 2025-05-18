@@ -1,5 +1,9 @@
 fileFormatVersion: 2
-guid: 96ad741e617dd054088a4f3c951966f6
+<<<<<<<< HEAD:Ascension_perso/Assets/prefabs/PlayerListItem.prefab.meta
+guid: c2929234254f2f00e952f8f65be0d89f
+========
+guid: 52c457b23a32ae74aaf9ec53c59d8303
+>>>>>>>> origin/jbg:Ascension_perso/Assets/prefabs/Wolf.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 
