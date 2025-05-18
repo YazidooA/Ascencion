@@ -4,8 +4,8 @@ using Photon.Pun;
 
 public class GameBootstrapper : MonoBehaviour
 {
-    [SerializeField] private string menuSceneName = "MenuScene";
-    [SerializeField] private string gameSceneName = "GameScene";
+    [SerializeField] private string menuSceneName;
+    [SerializeField] private string gameSceneName;
     
     private void Awake()
     {
