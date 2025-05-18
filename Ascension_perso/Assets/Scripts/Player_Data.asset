@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allowDash: 0
   allowWallSticking: 0
-  Money: 100
+  Money: 1000
   Hp: 100

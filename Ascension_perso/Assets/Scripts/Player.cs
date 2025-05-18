@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using System;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     [SerializeField] private storeData savedDatas;
@@ -16,8 +17,16 @@ public class Player : MonoBehaviour
     private int Hp => savedDatas.Hp;
     [SerializeField] private int damages = 20;
     [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private GameObject gameOver;
 
+    [SerializeField] private Rigidbody2D rb;
 
+    [SerializeField] private ParticleSystem bloodParticles;
+
+    private void Start()
+    {
+        gameOver.SetActive(false); ;
+    }
 
     void Update()
     {
@@ -32,6 +41,10 @@ public class Player : MonoBehaviour
         else
         {
             text.SetActive(false);
+        }
+        if (Hp == 0)
+        {
+            Dead();
         }
 
     }
@@ -54,7 +67,13 @@ public class Player : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy"))
         {
             savedDatas.Hp -= damages;
+            bloodParticles.Play();
         }
     }
-
+    private void Dead()
+    {
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        gameOver.SetActive(true);
+        savedDatas.Hp = 100;
+    }
 }

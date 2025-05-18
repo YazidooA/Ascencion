@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7c39769c46bf2d54282fed9c9436395e
+guid: 6b569226bcb941e499afe7cf867515f3
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8561815329659010897
-    second: feuille-arbre-neige_0
+      213: 3222776479912776169
+    second: feuille_neige_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,7 +113,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: feuille-arbre-neige_0
+      name: feuille_neige_0
       rect:
         serializedVersion: 2
         x: 0
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fa04e23f1525e2980800000000000000
-      internalID: -8561815329659010897
+      spriteID: 9e15fab222a99bc20800000000000000
+      internalID: 3222776479912776169
       vertices: []
       indices: 
       edges: []

@@ -71,7 +71,17 @@ public class Player_movements : MonoBehaviour
         }
 
         WallSlide();
-        WallJump();
+        if (allowWallSticking)
+        {
+            WallJump();
+        }
+        else
+        {
+            if (!IsOnIce())
+            {
+                WallJump();
+            }
+        }
 
         if (!isWallJumping)
         {
