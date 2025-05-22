@@ -40,10 +40,23 @@ public class Player : MonoBehaviour
     private bool oxygenBottle => savedDatas.oxygenBottle;
 
     [SerializeField] private GameObject textFin;
+    
+    // Nouvelles variables pour gérer les dégâts des ennemis IA
+    [Header("Combat System")]
+    [SerializeField] private float invincibilityDuration = 1.5f;
+    [SerializeField] private int blinkCount = 5;
+    [SerializeField] private AudioClip enemyHitSound;
+    private bool isInvincible = false;
+    private SpriteRenderer spriteRenderer;
+    private AudioSource audioSource;
 
     private void Start()
     {
-        gameOver.SetActive(false); ;
+        gameOver.SetActive(false);
+        
+        // Initialiser les nouveaux composants
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -61,7 +74,7 @@ public class Player : MonoBehaviour
             textShop.SetActive(false);
         }
 
-        if (Hp == 0)
+        if (Hp <= 0)
         {
             Dead();
         }
@@ -186,19 +199,126 @@ public class Player : MonoBehaviour
             Destroy(other.gameObject);
         }
     }
+    
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            savedDatas.Hp -= damages;
-            bloodParticles.Play();
+            // Garder votre système existant pour les ennemis simples
+            TakeDamageFromEnemy(damages);
         }
     }
+    
+    // Nouvelle méthode publique pour que les ennemis IA puissent infliger des dégâts
+    public void TakeDamageFromEnemy(int damage)
+    {
+        // Si le joueur est invincible, ne pas prendre de dégâts
+        if (isInvincible)
+            return;
+            
+        // Réduire la vie
+        savedDatas.Hp -= damage;
+        
+        // Jouer les effets visuels et sonores
+        if (bloodParticles != null)
+        {
+            bloodParticles.Play();
+        }
+        
+        if (enemyHitSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(enemyHitSound);
+        }
+        
+        // Appliquer l'effet de knockback (optionnel)
+        ApplyKnockback();
+        
+        // Vérifier si le joueur est mort
+        if (savedDatas.Hp <= 0)
+        {
+            Dead();
+        }
+        else
+        {
+            // Période d'invincibilité temporaire
+            StartCoroutine(BecomeInvincible());
+        }
+    }
+    
+    private void ApplyKnockback()
+    {
+        // Appliquer une force de recul léger
+        if (rb != null)
+        {
+            // Déterminer la direction du knockback
+            Vector2 knockbackDirection = Vector2.zero;
+            
+            // Trouver l'ennemi le plus proche
+            WolfEnemyAI[] wolves = FindObjectsOfType<WolfEnemyAI>();
+            float closestDistance = float.MaxValue;
+            Vector2 playerPosition = transform.position;
+            
+            foreach (WolfEnemyAI wolf in wolves)
+            {
+                float distance = Vector2.Distance(playerPosition, wolf.transform.position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    knockbackDirection = (playerPosition - (Vector2)wolf.transform.position).normalized;
+                }
+            }
+            
+            // Si aucun loup n'est trouvé, utiliser une direction par défaut
+            if (knockbackDirection == Vector2.zero)
+            {
+                knockbackDirection = spriteRenderer != null && spriteRenderer.flipX ? Vector2.left : Vector2.right;
+            }
+            
+            // Appliquer la force de knockback
+            rb.AddForce(knockbackDirection * 3f, ForceMode2D.Impulse);
+        }
+    }
+    
+    private IEnumerator BecomeInvincible()
+    {
+        isInvincible = true;
+        
+        // Effet de clignotement pour montrer l'invincibilité
+        if (spriteRenderer != null)
+        {
+            for (int i = 0; i < blinkCount; i++)
+            {
+                spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
+                yield return new WaitForSeconds(invincibilityDuration / (blinkCount * 2));
+                spriteRenderer.color = Color.white;
+                yield return new WaitForSeconds(invincibilityDuration / (blinkCount * 2));
+            }
+        }
+        else
+        {
+            // Si pas de SpriteRenderer, juste attendre
+            yield return new WaitForSeconds(invincibilityDuration);
+        }
+        
+        isInvincible = false;
+    }
+    
     private void Dead()
     {
         rb.constraints = RigidbodyConstraints2D.FreezeAll;
         gameOver.SetActive(true);
         savedDatas.Hp = 100;
         savedDatas.CurrentLevel -= 0.5;
+    }
+    
+    // Méthodes utilitaires publiques
+    public int GetCurrentHp()
+    {
+        return savedDatas.Hp;
+    }
+    
+    public bool IsInvincible()
+    {
+        return isInvincible;
     }
 }

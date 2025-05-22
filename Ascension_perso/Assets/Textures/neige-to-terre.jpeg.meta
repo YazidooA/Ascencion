@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      neige-to-terre_0: 2362001812201571345
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

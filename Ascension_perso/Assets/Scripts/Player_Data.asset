@@ -15,6 +15,6 @@ MonoBehaviour:
   allowDash: 1
   allowWallSticking: 1
   oxygenBottle: 1
-  Money: 105
+  Money: 0
   Hp: 100
-  CurrentLevel: 4.5
+  CurrentLevel: 0.5
