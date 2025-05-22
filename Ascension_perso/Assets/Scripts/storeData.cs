@@ -8,4 +8,5 @@ public class storeData : ScriptableObject
     public bool allowWallSticking;
     public int Money;
     public int Hp;
+    public double CurrentLevel;
 }

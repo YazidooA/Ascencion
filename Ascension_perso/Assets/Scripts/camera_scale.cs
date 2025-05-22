@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class camera_scale : MonoBehaviour
 {
-    [SerializeField] private int unitsToShowHorizontally = 16;
-    [SerializeField] private int unitsToShowVertically = 9;
+    private int unitsToShowHorizontally = 18;
+    private int unitsToShowVertically = 13;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

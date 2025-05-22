@@ -7,12 +7,12 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private storeData savedDatas;
 
-    [SerializeField] private GameObject text;
+    [SerializeField] private GameObject textShop;
     [SerializeField] private Transform collisionCheck;
     [SerializeField] private LayerMask shopLayer;
 
     private int Money => savedDatas.Money;
-    [SerializeField] private int coinValue = 1;
+    [SerializeField] private int coinValue = 5;
 
     private int Hp => savedDatas.Hp;
     [SerializeField] private int damages = 20;
@@ -23,6 +23,15 @@ public class Player : MonoBehaviour
 
     [SerializeField] private ParticleSystem bloodParticles;
 
+    private double CurrentLevel => savedDatas.CurrentLevel;
+    [SerializeField] private LayerMask flagLayer;
+    [SerializeField] private GameObject textFlagNext;
+
+    [SerializeField] private GameObject text05;
+    [SerializeField] private GameObject text15;
+    [SerializeField] private GameObject text25;
+    [SerializeField] private GameObject text35;
+
     private void Start()
     {
         gameOver.SetActive(false); ;
@@ -32,7 +41,7 @@ public class Player : MonoBehaviour
     {
         if (IsOnShop())
         {
-            text.SetActive(true);
+            textShop.SetActive(true);
             if (Input.GetKeyDown(KeyCode.E))
             {
                 SceneManager.LoadScene("scene_shop");
@@ -40,11 +49,84 @@ public class Player : MonoBehaviour
         }
         else
         {
-            text.SetActive(false);
+            textShop.SetActive(false);
         }
+
         if (Hp == 0)
         {
             Dead();
+        }
+
+        if (IsOnFlagNext())
+        {
+            textFlagNext.SetActive(true);
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                switch (CurrentLevel)
+                {
+                    case 0.5:
+                        SceneManager.LoadScene("Level 1");
+                        savedDatas.CurrentLevel += 0.5;
+                        break;
+                    case 1.5:
+                        SceneManager.LoadScene("Level 2");
+                        savedDatas.CurrentLevel += 0.5;
+                        break;
+                    case 2.5:
+                        SceneManager.LoadScene("Level 3");
+                        savedDatas.CurrentLevel += 0.5;
+                        break;
+                    case 3.5:
+                        SceneManager.LoadScene("Level 4");
+                        savedDatas.CurrentLevel += 0.5;
+                        break;
+                    case 4:
+                        SceneManager.LoadScene("Fin");
+                        break;
+                    default:
+                        SceneManager.LoadScene("scene_camp_de_base");
+                        savedDatas.CurrentLevel += 0.5;
+                        break;
+
+                }
+            }
+        }
+        else
+        {
+            textFlagNext.SetActive(false);
+        }
+        switch (CurrentLevel)
+        {
+            case 0.5:
+                text05.SetActive(true);
+                text15.SetActive(false);
+                text25.SetActive(false);
+                text35.SetActive(false);
+                break;
+            case 1.5:
+                text05.SetActive(false);
+                text15.SetActive(true);
+                text25.SetActive(false);
+                text35.SetActive(false);
+                break;
+            case 2.5:
+                text05.SetActive(false);
+                text15.SetActive(false);
+                text25.SetActive(true);
+                text35.SetActive(false);
+                break;
+            case 3.5:
+                text05.SetActive(false);
+                text15.SetActive(false);
+                text25.SetActive(false);
+                text35.SetActive(true);
+                break;
+            default:
+                text05.SetActive(false);
+                text15.SetActive(false);
+                text25.SetActive(false);
+                text35.SetActive(false);
+                break;
         }
 
     }
@@ -52,6 +134,10 @@ public class Player : MonoBehaviour
     private bool IsOnShop()
     {
         return Physics2D.OverlapCircle(collisionCheck.position, 0.2f, shopLayer);
+    }
+    private bool IsOnFlagNext()
+    {
+        return Physics2D.OverlapCircle(collisionCheck.position, 0.2f, flagLayer);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -75,5 +161,6 @@ public class Player : MonoBehaviour
         rb.constraints = RigidbodyConstraints2D.FreezeAll;
         gameOver.SetActive(true);
         savedDatas.Hp = 100;
+        savedDatas.CurrentLevel -= 0.5;
     }
 }

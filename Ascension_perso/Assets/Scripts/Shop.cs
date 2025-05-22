@@ -6,9 +6,12 @@ public class Shop : MonoBehaviour
     [SerializeField] private storeData savedDatas;
     [SerializeField] private GameObject redCross1;
     [SerializeField] private GameObject redCross2;
+    [SerializeField] private GameObject redCross4;
     private int Money => savedDatas.Money;
+    private int Hp => savedDatas.Hp;
     [SerializeField] private int bootsPrice = 50;
     [SerializeField] private int dashPrice = 100;
+    [SerializeField] private int heartPrice = 10;
 
 
 
@@ -38,7 +41,16 @@ public class Shop : MonoBehaviour
                 savedDatas.Money -= dashPrice;
             }
         }
-
+    }
+    public void BuyButton4()
+    {
+        if (Money >= heartPrice)
+        {
+            if (Hp != 100)
+            {
+                savedDatas.Hp = 100;
+            }
+        }
     }
 
     void Update()
@@ -59,6 +71,15 @@ public class Shop : MonoBehaviour
         else
         {
             redCross2.SetActive(false);
+        }
+
+        if (Hp == 100)
+        {
+            redCross4.SetActive(true);
+        }
+        else
+        {
+            redCross4.SetActive(false);
         }
     }
 }

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b701bd557f28544f862585a49291229, type: 3}
   m_Name: Player_Data
   m_EditorClassIdentifier: 
-  allowDash: 0
-  allowWallSticking: 0
-  Money: 1000
+  allowDash: 1
+  allowWallSticking: 1
+  Money: 190
   Hp: 100
+  CurrentLevel: 4
