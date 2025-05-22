@@ -39,6 +39,8 @@ public class Player : MonoBehaviour
 
     private bool oxygenBottle => savedDatas.oxygenBottle;
 
+    [SerializeField] private GameObject textFin;
+
     private void Start()
     {
         gameOver.SetActive(false); ;
@@ -92,6 +94,7 @@ public class Player : MonoBehaviour
                         break;
                     case 4:
                         SceneManager.LoadScene("Fin");
+                        savedDatas.CurrentLevel += 0.5;
                         break;
                     default:
                         SceneManager.LoadScene("scene_camp_de_base");
@@ -112,30 +115,42 @@ public class Player : MonoBehaviour
                 text15.SetActive(false);
                 text25.SetActive(false);
                 text35.SetActive(false);
+                textFin.SetActive(false);
                 break;
             case 1.5:
                 text05.SetActive(false);
                 text15.SetActive(true);
                 text25.SetActive(false);
                 text35.SetActive(false);
+                textFin.SetActive(false);
                 break;
             case 2.5:
                 text05.SetActive(false);
                 text15.SetActive(false);
                 text25.SetActive(true);
                 text35.SetActive(false);
+                textFin.SetActive(false);
                 break;
             case 3.5:
                 text05.SetActive(false);
                 text15.SetActive(false);
                 text25.SetActive(false);
                 text35.SetActive(true);
+                textFin.SetActive(false);
+                break;
+            case 4.5:
+                text05.SetActive(false);
+                text15.SetActive(false);
+                text25.SetActive(false);
+                text35.SetActive(false);
+                textFin.SetActive(true);
                 break;
             default:
                 text05.SetActive(false);
                 text15.SetActive(false);
                 text25.SetActive(false);
                 text35.SetActive(false);
+                textFin.SetActive(false);
                 break;
         }
         if (CurrentLevel == 4)

@@ -1627,7 +1627,7 @@ MonoBehaviour:
   savedDatas: {fileID: 11400000, guid: 5b521605a8749514ba9fe5cd801e922a, type: 2}
   redCross1: {fileID: 1404461822}
   redCross2: {fileID: 586384145}
-  redCross3: {fileID: 0}
+  redCross3: {fileID: 1365727032}
   redCross4: {fileID: 2088253287}
   bootsPrice: 50
   dashPrice: 100
