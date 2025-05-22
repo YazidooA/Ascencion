@@ -40,6 +40,9 @@ public class Player_movements : MonoBehaviour
 
     [SerializeField] private Animator animator;
 
+    [SerializeField] private AudioSource sautSound;
+    [SerializeField] private AudioSource dashSound;
+
     void Update()
     {
         animator.SetFloat("Speed", Math.Abs(horizontal));
@@ -56,11 +59,13 @@ public class Player_movements : MonoBehaviour
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpingPower);
+            sautSound.Play(0);
         }
 
         if (Input.GetButtonUp("Jump") && rb.linearVelocity.y > 0f)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
+            sautSound.Play(0);
         }
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
         {
@@ -162,6 +167,7 @@ public class Player_movements : MonoBehaviour
             isWallJumping = true;
             rb.linearVelocity = new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y);
             wallJumpingCounter = 0f;
+            sautSound.Play(0);
 
             if (transform.localScale.x != wallJumpingDirection)
             {
@@ -192,6 +198,7 @@ public class Player_movements : MonoBehaviour
     }
     private IEnumerator Dash()
     {
+        dashSound.Play(0);
         canDash = false;
         isDashing = true;
         float originalGravity = rb.gravityScale;

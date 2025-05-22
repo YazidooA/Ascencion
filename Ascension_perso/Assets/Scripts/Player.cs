@@ -3,6 +3,8 @@ using UnityEngine;
 using System;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
+
 public class Player : MonoBehaviour
 {
     [SerializeField] private storeData savedDatas;
@@ -31,6 +33,11 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject text15;
     [SerializeField] private GameObject text25;
     [SerializeField] private GameObject text35;
+
+    private float Timer = 60.0f;
+    [SerializeField] private TextMeshProUGUI textTimer;
+
+    private bool oxygenBottle => savedDatas.oxygenBottle;
 
     private void Start()
     {
@@ -77,8 +84,11 @@ public class Player : MonoBehaviour
                         savedDatas.CurrentLevel += 0.5;
                         break;
                     case 3.5:
-                        SceneManager.LoadScene("Level 4");
-                        savedDatas.CurrentLevel += 0.5;
+                        if (oxygenBottle)
+                        {
+                            SceneManager.LoadScene("Level 4");
+                            savedDatas.CurrentLevel += 0.5;
+                        }
                         break;
                     case 4:
                         SceneManager.LoadScene("Fin");
@@ -128,7 +138,20 @@ public class Player : MonoBehaviour
                 text35.SetActive(false);
                 break;
         }
-
+        if (CurrentLevel == 4)
+        {
+            textTimer.enabled = true;
+            Timer -= Time.deltaTime;
+            textTimer.text = Timer.ToString();
+            if (Timer <= 0.0f)
+            {
+                Dead();
+            }
+        }
+        else
+        {
+            textTimer.enabled = false;
+        }
     }
 
     private bool IsOnShop()
