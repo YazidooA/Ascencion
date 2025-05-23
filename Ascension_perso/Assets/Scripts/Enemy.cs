@@ -147,7 +147,7 @@ public class WolfEnemyAI : MonoBehaviour
     
     private void FixedUpdate()
     {
-        // Gérer le mouvement en fonction de l'état
+        // Manage Movement depending on the state
         switch (currentState)
         {
             case WolfState.Patrolling:
@@ -157,12 +157,12 @@ public class WolfEnemyAI : MonoBehaviour
                 ChasePlayer();
                 break;
             case WolfState.Attacking:
-                // Pas de mouvement pendant l'attaque
+                // No movement while attacking
                 rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
                 break;
             case WolfState.Stunned:
             case WolfState.WaitingAtPoint:
-                // Pas de mouvement pendant le stun ou l'attente
+                // No movement during stun or waiting
                 rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
                 break;
         }
