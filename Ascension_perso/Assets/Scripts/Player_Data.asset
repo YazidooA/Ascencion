@@ -17,4 +17,4 @@ MonoBehaviour:
   oxygenBottle: 1
   Money: 0
   Hp: 100
-  CurrentLevel: 0.5
+  CurrentLevel: 1

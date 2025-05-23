@@ -15,7 +15,7 @@ public class Menu : MonoBehaviour
     }
     public void PlayButton()
     {
-        SceneManager.LoadScene("scene_camp_de_base");
+        SceneManager.LoadScene("Lobby");
         savedDatas.Hp = 100;
         savedDatas.Money = 0;
         savedDatas.CurrentLevel = 0.5;

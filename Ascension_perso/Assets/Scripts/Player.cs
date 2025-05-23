@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         gameOver.SetActive(false);
-        
+        textFin.SetActive(false);
         // Initialiser les nouveaux composants
         spriteRenderer = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
