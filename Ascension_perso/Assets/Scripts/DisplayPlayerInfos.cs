@@ -11,12 +11,14 @@ public class DisplayPlayerInfos : MonoBehaviour
     [SerializeField] private TextMeshProUGUI HpText;
     private int Money => savedDatas.Money;
     private int Hp => savedDatas.Hp;
-
+    private float Timer => savedDatas.Timer;
+    [SerializeField] private TextMeshProUGUI textTimer;
 
     void Update()
     {
         MoneyText.text = Money.ToString();
         HpText.text = Hp.ToString();
+        textTimer.text = Timer.ToString();
     }
     public void BackToBaseCamp()
     {

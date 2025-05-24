@@ -218,7 +218,7 @@ MonoBehaviour:
   text15: {fileID: 2035737237310912488}
   text25: {fileID: 8189993080046166457}
   text35: {fileID: 1591829455263228973}
-  textTimer: {fileID: 4160656752820720092}
+  textTimer: {fileID: 1744251527619044061}
   textFin: {fileID: 0}
   invincibilityDuration: 1.5
   blinkCount: 5
@@ -6682,6 +6682,7 @@ MonoBehaviour:
   savedDatas: {fileID: 11400000, guid: 5b521605a8749514ba9fe5cd801e922a, type: 2}
   MoneyText: {fileID: 3579238201690359168}
   HpText: {fileID: 1660804595742274175}
+  textTimer: {fileID: 0}
 --- !u!1 &5626287161877257589
 GameObject:
   m_ObjectHideFlags: 0

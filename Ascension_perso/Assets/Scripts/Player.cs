@@ -34,8 +34,8 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject text25;
     [SerializeField] private GameObject text35;
 
-    private float Timer = 60.0f;
-    [SerializeField] private TextMeshProUGUI textTimer;
+    private float Timer => savedDatas.Timer;
+    [SerializeField] private GameObject textTimer;
 
     private bool oxygenBottle => savedDatas.oxygenBottle;
 
@@ -124,6 +124,7 @@ public class Player : MonoBehaviour
         switch (CurrentLevel)
         {
             case 0.5:
+                textTimer.SetActive(false);
                 text05.SetActive(true);
                 text15.SetActive(false);
                 text25.SetActive(false);
@@ -131,6 +132,7 @@ public class Player : MonoBehaviour
                 textFin.SetActive(false);
                 break;
             case 1.5:
+                textTimer.SetActive(false);
                 text05.SetActive(false);
                 text15.SetActive(true);
                 text25.SetActive(false);
@@ -138,6 +140,7 @@ public class Player : MonoBehaviour
                 textFin.SetActive(false);
                 break;
             case 2.5:
+                textTimer.SetActive(false);
                 text05.SetActive(false);
                 text15.SetActive(false);
                 text25.SetActive(true);
@@ -145,13 +148,25 @@ public class Player : MonoBehaviour
                 textFin.SetActive(false);
                 break;
             case 3.5:
+                textTimer.SetActive(false);
                 text05.SetActive(false);
                 text15.SetActive(false);
                 text25.SetActive(false);
                 text35.SetActive(true);
                 textFin.SetActive(false);
                 break;
+            case 4:
+                textTimer.SetActive(false);
+                text05.SetActive(false);
+                text15.SetActive(false);
+                text25.SetActive(false);
+                text35.SetActive(false);
+                textFin.SetActive(false);
+                savedDatas.Timer -= Time.deltaTime;
+                if (Timer <= 0.0f) Dead();
+                break;
             case 4.5:
+                textTimer.SetActive(false);
                 text05.SetActive(false);
                 text15.SetActive(false);
                 text25.SetActive(false);
@@ -159,26 +174,13 @@ public class Player : MonoBehaviour
                 textFin.SetActive(true);
                 break;
             default:
+                textTimer.SetActive(false);
                 text05.SetActive(false);
                 text15.SetActive(false);
                 text25.SetActive(false);
                 text35.SetActive(false);
                 textFin.SetActive(false);
                 break;
-        }
-        if (CurrentLevel == 4)
-        {
-            textTimer.enabled = true;
-            Timer -= Time.deltaTime;
-            textTimer.text = Timer.ToString();
-            if (Timer <= 0.0f)
-            {
-                Dead();
-            }
-        }
-        else
-        {
-            textTimer.enabled = false;
         }
     }
 
@@ -303,7 +305,7 @@ public class Player : MonoBehaviour
         isInvincible = false;
     }
     
-    private void Dead()
+    public void Dead()
     {
         rb.constraints = RigidbodyConstraints2D.FreezeAll;
         gameOver.SetActive(true);

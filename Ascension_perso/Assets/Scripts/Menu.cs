@@ -22,6 +22,7 @@ public class Menu : MonoBehaviour
         savedDatas.allowDash = false;
         savedDatas.allowWallSticking = false;
         savedDatas.oxygenBottle = false;
+        savedDatas.Timer = 60.0f;
     }
     public void QuitButton()
     {

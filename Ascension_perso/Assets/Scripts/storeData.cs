@@ -10,4 +10,5 @@ public class storeData : ScriptableObject
     public int Money;
     public int Hp;
     public double CurrentLevel;
+    public float Timer;
 }
