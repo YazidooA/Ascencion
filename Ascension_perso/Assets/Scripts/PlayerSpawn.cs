@@ -25,10 +25,8 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
         Transform spawnPoint = GetRandomSpawnPoint();
         GameObject player = PhotonNetwork.Instantiate(playerPrefab.name, spawnPoint.position, Quaternion.identity);
         Debug.Log("Joueur instancié : " + player.GetPhotonView().ViewID);
-        // Assigner directement la cible à la caméra
         CameraFollow cameraScript = FindObjectOfType<CameraFollow>();
         cameraScript.SetTarget(player.transform);
-        // Assigner le joueur à tous les ennemis de la scène
         WolfEnemyAI[] wolves = FindObjectsOfType<WolfEnemyAI>();
         foreach (WolfEnemyAI wolf in wolves) wolf.SetPlayer(player.transform);
     }

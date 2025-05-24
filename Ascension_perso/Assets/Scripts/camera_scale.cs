@@ -4,8 +4,6 @@ public class camera_scale : MonoBehaviour
 {
     private int unitsToShowHorizontally = 22;
     private int unitsToShowVertically = 16;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         float screenWidth = unitsToShowHorizontally;
@@ -17,11 +15,5 @@ public class camera_scale : MonoBehaviour
         Camera.main.orthographicSize = orthographicSize;
 
         Camera.main.aspect = screenWidth / screenHeight;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }

@@ -21,20 +21,10 @@ public class PauseMenu : MonoBehaviour
     
     void Start()
     {
-        // S'assurer que le menu est désactivé au début
-        if (pauseMenuUI != null)
-            pauseMenuUI.SetActive(false);
-            
-        if (settingsPanel != null)
-            settingsPanel.SetActive(false);
-        
-        // Configuration des boutons
+        if (pauseMenuUI != null) pauseMenuUI.SetActive(false);
+        if (settingsPanel != null) settingsPanel.SetActive(false);
         SetupButtons();
-        
-        // Récupérer l'AudioSource si présent
         audioSource = FindObjectOfType<AudioSource>();
-        
-        // Initialiser le volume slider
         if (volumeSlider != null && audioSource != null)
         {
             volumeSlider.value = audioSource.volume;
@@ -44,52 +34,35 @@ public class PauseMenu : MonoBehaviour
     
     void Update()
     {
-        // Détecter la touche Escape ou P pour pause
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
         {
-            if (isPaused)
-                ResumeGame();
-            else
-                PauseGame();
+            if (isPaused) ResumeGame();
+            else PauseGame();
         }
     }
     
     void SetupButtons()
     {
-        // Configurer les événements des boutons
-        if (resumeButton != null)
-            resumeButton.onClick.AddListener(ResumeGame);
-            
-        if (settingsButton != null)
-            settingsButton.onClick.AddListener(OpenSettings);
-            
-        if (mainMenuButton != null)
-            mainMenuButton.onClick.AddListener(LoadMainMenu);
-            
-        if (quitButton != null)
-            quitButton.onClick.AddListener(QuitGame);
-            
-        if (backButton != null)
-            backButton.onClick.AddListener(CloseSettings);
+        if (resumeButton != null) resumeButton.onClick.AddListener(ResumeGame);
+        if (settingsButton != null) settingsButton.onClick.AddListener(OpenSettings);
+        if (mainMenuButton != null) mainMenuButton.onClick.AddListener(LoadMainMenu);
+        if (quitButton != null) quitButton.onClick.AddListener(QuitGame);
+        if (backButton != null) backButton.onClick.AddListener(CloseSettings);
     }
     
     public void PauseGame()
     {
         pauseMenuUI.SetActive(true);
-        Time.timeScale = 0f; // Arrêter le temps du jeu
+        Time.timeScale = 0f; 
         isPaused = true;
-        
-        // Désactiver les contrôles du joueur si nécessaire
         DisablePlayerControls();
     }
     
     public void ResumeGame()
     {
         pauseMenuUI.SetActive(false);
-        Time.timeScale = 1f; // Reprendre le temps normal
+        Time.timeScale = 1f; 
         isPaused = false;
-        
-        // Réactiver les contrôles du joueur
         EnablePlayerControls();
     }
     
@@ -113,16 +86,14 @@ public class PauseMenu : MonoBehaviour
     
     public void LoadMainMenu()
     {
-        Time.timeScale = 1f; // Remettre le temps normal avant de changer de scène
-        SceneManager.LoadScene("Menu"); // Remplacez par le nom de votre scène de menu principal
+        Time.timeScale = 1f; 
+        SceneManager.LoadScene("Menu"); 
     }
     
     public void QuitGame()
     {
         Debug.Log("Quitter le jeu...");
         Application.Quit();
-        
-        // Pour tester dans l'éditeur Unity
         #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
         #endif
@@ -130,52 +101,31 @@ public class PauseMenu : MonoBehaviour
     
     public void ChangeVolume(float volume)
     {
-        if (audioSource != null)
-        {
-            audioSource.volume = volume;
-        }
-        
-        // Vous pouvez aussi sauvegarder cette valeur
+        if (audioSource != null) audioSource.volume = volume;
         PlayerPrefs.SetFloat("MasterVolume", volume);
     }
     
     void DisablePlayerControls()
     {
-        // Désactiver le script de contrôle du joueur
-        PlayerController playerController = FindObjectOfType<PlayerController>();
-        if (playerController != null)
-            playerController.enabled = false;
-            
-        // Ou désactiver tous les scripts de mouvement
+        Player_movements playerController = FindObjectOfType<Player_movements>();
+        if (playerController != null) playerController.enabled = false;
         MonoBehaviour[] playerScripts = FindObjectsOfType<MonoBehaviour>();
         foreach (MonoBehaviour script in playerScripts)
-        {
             if (script.CompareTag("Player"))
-            {
                 script.enabled = false;
-            }
-        }
     }
     
     void EnablePlayerControls()
     {
-        // Réactiver le script de contrôle du joueur
-        PlayerController playerController = FindObjectOfType<PlayerController>();
-        if (playerController != null)
-            playerController.enabled = true;
-            
-        // Ou réactiver tous les scripts de mouvement
+        Player_movements playerController = FindObjectOfType<Player_movements>();
+        if (playerController != null) playerController.enabled = true;
         MonoBehaviour[] playerScripts = FindObjectsOfType<MonoBehaviour>();
         foreach (MonoBehaviour script in playerScripts)
-        {
             if (script.CompareTag("Player"))
-            {
                 script.enabled = true;
-            }
-        }
+            
+        
     }
-    
-    // Propriété publique pour vérifier l'état de pause
     public bool IsPaused
     {
         get { return isPaused; }
@@ -183,8 +133,6 @@ public class PauseMenu : MonoBehaviour
     
     void OnDestroy()
     {
-        // Nettoyer les listeners
-        if (volumeSlider != null)
-            volumeSlider.onValueChanged.RemoveAllListeners();
+        if (volumeSlider != null) volumeSlider.onValueChanged.RemoveAllListeners();
     }
 }

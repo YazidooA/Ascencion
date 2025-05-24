@@ -40,8 +40,6 @@ public class Player : MonoBehaviour
     private bool oxygenBottle => savedDatas.oxygenBottle;
 
     [SerializeField] private GameObject textFin;
-    
-    // Nouvelles variables pour gérer les dégâts des ennemis IA
     [Header("Combat System")]
     [SerializeField] private float invincibilityDuration = 1.5f;
     [SerializeField] private int blinkCount = 5;
@@ -54,7 +52,6 @@ public class Player : MonoBehaviour
     {
         gameOver.SetActive(false);
         textFin.SetActive(false);
-        // Initialiser les nouveaux composants
         spriteRenderer = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
     }
@@ -204,62 +201,26 @@ public class Player : MonoBehaviour
     
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-            // Garder votre système existant pour les ennemis simples
-            TakeDamageFromEnemy(damages);
-        }
+        if (other.gameObject.CompareTag("Enemy")) TakeDamageFromEnemy(damages);
     }
-    
-    // Nouvelle méthode publique pour que les ennemis IA puissent infliger des dégâts
     public void TakeDamageFromEnemy(int damage)
     {
-        // Si le joueur est invincible, ne pas prendre de dégâts
-        if (isInvincible)
-            return;
-            
-        // Réduire la vie
+        if (isInvincible) return;
         savedDatas.Hp -= damage;
-        
-        // Jouer les effets visuels et sonores
-        if (bloodParticles != null)
-        {
-            bloodParticles.Play();
-        }
-        
-        if (enemyHitSound != null && audioSource != null)
-        {
-            audioSource.PlayOneShot(enemyHitSound);
-        }
-        
-        // Appliquer l'effet de knockback (optionnel)
+        if (bloodParticles != null) bloodParticles.Play();
+        if (enemyHitSound != null && audioSource != null) audioSource.PlayOneShot(enemyHitSound);
         ApplyKnockback();
-        
-        // Vérifier si le joueur est mort
-        if (savedDatas.Hp <= 0)
-        {
-            Dead();
-        }
-        else
-        {
-            // Période d'invincibilité temporaire
-            StartCoroutine(BecomeInvincible());
-        }
+        if (savedDatas.Hp <= 0) Dead();
+        else StartCoroutine(BecomeInvincible());
     }
-    
     private void ApplyKnockback()
     {
-        // Appliquer une force de recul léger
         if (rb != null)
         {
-            // Déterminer la direction du knockback
             Vector2 knockbackDirection = Vector2.zero;
-            
-            // Trouver l'ennemi le plus proche
             WolfEnemyAI[] wolves = FindObjectsOfType<WolfEnemyAI>();
             float closestDistance = float.MaxValue;
             Vector2 playerPosition = transform.position;
-            
             foreach (WolfEnemyAI wolf in wolves)
             {
                 float distance = Vector2.Distance(playerPosition, wolf.transform.position);
@@ -269,23 +230,13 @@ public class Player : MonoBehaviour
                     knockbackDirection = (playerPosition - (Vector2)wolf.transform.position).normalized;
                 }
             }
-            
-            // Si aucun loup n'est trouvé, utiliser une direction par défaut
-            if (knockbackDirection == Vector2.zero)
-            {
-                knockbackDirection = spriteRenderer != null && spriteRenderer.flipX ? Vector2.left : Vector2.right;
-            }
-            
-            // Appliquer la force de knockback
+            if (knockbackDirection == Vector2.zero) knockbackDirection = spriteRenderer != null && spriteRenderer.flipX ? Vector2.left : Vector2.right;
             rb.AddForce(knockbackDirection * 3f, ForceMode2D.Impulse);
         }
     }
-    
     private IEnumerator BecomeInvincible()
     {
         isInvincible = true;
-        
-        // Effet de clignotement pour montrer l'invincibilité
         if (spriteRenderer != null)
         {
             for (int i = 0; i < blinkCount; i++)
@@ -296,12 +247,7 @@ public class Player : MonoBehaviour
                 yield return new WaitForSeconds(invincibilityDuration / (blinkCount * 2));
             }
         }
-        else
-        {
-            // Si pas de SpriteRenderer, juste attendre
-            yield return new WaitForSeconds(invincibilityDuration);
-        }
-        
+        else yield return new WaitForSeconds(invincibilityDuration);
         isInvincible = false;
     }
     
@@ -312,8 +258,6 @@ public class Player : MonoBehaviour
         savedDatas.Hp = 100;
         savedDatas.CurrentLevel -= 0.5;
     }
-    
-    // Méthodes utilitaires publiques
     public int GetCurrentHp()
     {
         return savedDatas.Hp;

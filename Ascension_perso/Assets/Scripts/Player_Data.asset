@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allowDash: 1
   allowWallSticking: 1
-  oxygenBottle: 1
-  Money: 0
-  Hp: 100
-  CurrentLevel: 1
+  oxygenBottle: 0
+  Money: 90
+  Hp: 80
+  CurrentLevel: 3
+  Timer: 60

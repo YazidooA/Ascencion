@@ -11,21 +11,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        // Cette ligne permet d'éviter certains problèmes de déconnexion
         PhotonNetwork.AutomaticallySyncScene = true;
-        
-        // Se connecter au serveur Photon
         ConnectToPhoton();
     }
 
     private void ConnectToPhoton()
     {
-        // Vérifier si on est déjà connecté
-        if (PhotonNetwork.IsConnected)
-            return;
-
+        if (PhotonNetwork.IsConnected) return;
         Debug.Log("Connexion au serveur Photon...");
-        // Se connecter avec la version du jeu
         PhotonNetwork.ConnectUsingSettings();
         PhotonNetwork.GameVersion = gameVersion;
     }
@@ -44,27 +37,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             IsVisible = true,
             IsOpen = true
         };
-
-        // Essayer de rejoindre la salle, sinon la créer
         PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, TypedLobby.Default);
-    }
-
-    public override void OnJoinedRoom()
-    {
-        Debug.Log("Salle rejointe : " + PhotonNetwork.CurrentRoom.Name);
-        
-        // Si on est le premier joueur (hôte), charger la scène de jeu
-        if (PhotonNetwork.IsMasterClient)
-        {
-            // Chargez votre scène de jeu ici
-            // PhotonNetwork.LoadLevel("GameScene");
-        }
     }
 
     public override void OnDisconnected(DisconnectCause cause)
     {
         Debug.LogWarning("Déconnecté du serveur Photon : " + cause);
-        // Reconnexion automatique
         ConnectToPhoton();
     }
 }
