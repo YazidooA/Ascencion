@@ -28,6 +28,9 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
         // Assigner directement la cible à la caméra
         CameraFollow cameraScript = FindObjectOfType<CameraFollow>();
         cameraScript.SetTarget(player.transform);
+        // Assigner le joueur à tous les ennemis de la scène
+        WolfEnemyAI[] wolves = FindObjectsOfType<WolfEnemyAI>();
+        foreach (WolfEnemyAI wolf in wolves) wolf.SetPlayer(player.transform);
     }
 
     private Transform GetRandomSpawnPoint()

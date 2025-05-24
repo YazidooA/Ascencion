@@ -10,6 +10,11 @@ public class WolfEnemyAI : MonoBehaviour
     [SerializeField] private Transform attackPoint;                 // Point d'attaque
     [SerializeField] private LayerMask playerLayer;                 // Layer du joueur
     
+    [Header("Recherche du joueur")]
+    [SerializeField] private string playerTag = "Player";           // Tag du joueur à chercher
+    [SerializeField] private bool autoFindPlayer = true;            // Chercher automatiquement le joueur
+    [SerializeField] private float searchInterval = 0.5f;          // Intervalle de recherche en secondes
+    
     [Header("Comportement")]
     [SerializeField] private float patrolSpeed = 2f;                // Vitesse de patrouille
     [SerializeField] private float chaseSpeed = 4f;                 // Vitesse de poursuite
@@ -48,6 +53,9 @@ public class WolfEnemyAI : MonoBehaviour
     private float stunTimer = 0f;
     private float waitTimer = 0f;
     
+    // Variables pour la recherche du joueur
+    private Coroutine searchCoroutine;
+    
     private void Start()
     {
         // Initialiser les composants
@@ -76,10 +84,19 @@ public class WolfEnemyAI : MonoBehaviour
         
         // Démarrer les hurlements aléatoires
         StartCoroutine(RandomHowl());
+        
+        // Ne pas chercher automatiquement au start - attendre que le joueur spawn
+        // La recherche se fera seulement sur demande
     }
     
     private void Update()
     {
+        // Chercher le joueur si il n'est pas assigné et que la recherche automatique est activée
+        if (player == null && autoFindPlayer && searchCoroutine == null)
+        {
+            StartSearchingForPlayer();
+        }
+        
         // Gérer le compteur de temps d'attaque
         if (!canAttack)
         {
@@ -364,6 +381,9 @@ public class WolfEnemyAI : MonoBehaviour
     
     private void Die()
     {
+        // Arrêter la recherche du joueur
+        StopSearchingForPlayer();
+        
         // Jouer l'animation de mort
         if (animator != null)
         {
@@ -386,7 +406,96 @@ public class WolfEnemyAI : MonoBehaviour
         Destroy(gameObject, 2f);
     }
     
+    // ========== NOUVELLES MÉTHODES POUR LA GESTION DU SPAWN ==========
+    
+    // Méthode pour assigner manuellement le joueur (appelée par votre fonction de spawn)
+    public void SetPlayer(Transform playerTransform)
+    {
+        player = playerTransform;
+        StopSearchingForPlayer();
+        Debug.Log("Wolf " + gameObject.name + " has found player: " + player.name);
+    }
+    
+    // Méthode pour assigner le joueur par GameObject
+    public void SetPlayer(GameObject playerObject)
+    {
+        if (playerObject != null)
+        {
+            SetPlayer(playerObject.transform);
+        }
+    }
+    
+    // Commencer la recherche automatique du joueur
+    public void StartSearchingForPlayer()
+    {
+        if (searchCoroutine == null)
+        {
+            searchCoroutine = StartCoroutine(SearchForPlayerCoroutine());
+        }
+    }
+    
+    // Arrêter la recherche automatique
+    public void StopSearchingForPlayer()
+    {
+        if (searchCoroutine != null)
+        {
+            StopCoroutine(searchCoroutine);
+            searchCoroutine = null;
+        }
+    }
+    
+    // Coroutine qui cherche périodiquement le joueur
+    private IEnumerator SearchForPlayerCoroutine()
+    {
+        while (player == null)
+        {
+            // Chercher par tag
+            GameObject playerObject = GameObject.FindGameObjectWithTag(playerTag);
+            
+            if (playerObject != null)
+            {
+                SetPlayer(playerObject.transform);
+                yield break; // Sortir de la coroutine
+            }
 
+            // Attendre avant de chercher à nouveau
+            yield return new WaitForSeconds(searchInterval);
+        }
+        
+        searchCoroutine = null;
+    }
+    
+    // Méthode utilitaire pour forcer une recherche immédiate
+    public void FindPlayerNow()
+    {
+        GameObject playerObject = GameObject.FindGameObjectWithTag(playerTag);
+        if (playerObject != null)
+        {
+            SetPlayer(playerObject.transform);
+        }
+    }
+    
+    // Méthode à appeler APRÈS que le joueur ait spawné dans la scène
+    public void StartHuntingPlayer()
+    {
+        FindPlayerNow();
+        if (player == null && autoFindPlayer)
+        {
+            StartSearchingForPlayer();
+        }
+    }
+    
+    // Effacer la référence du joueur actuel
+    public void ClearPlayer()
+    {
+        player = null;
+        if (autoFindPlayer)
+        {
+            StartSearchingForPlayer();
+        }
+    }
+    
+    // ========== MÉTHODES EXISTANTES ==========
     
     // Méthodes publiques pour déboguer ou contrôler le loup
     public void SetPatrolPoints(Transform point1, Transform point2)
@@ -403,9 +512,9 @@ public class WolfEnemyAI : MonoBehaviour
         }
     }
     
-    public void SetPlayer(Transform playerTransform)
+    void OnDestroy()
     {
-        player = playerTransform;
+        StopSearchingForPlayer();
     }
     
     // Dessiner des gizmos pour visualiser les rayons de détection et d'attaque
